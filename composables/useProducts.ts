@@ -115,7 +115,41 @@ export const showProduct = () => {
           
   }
 
+
+    const deleteProductFromServer = async (id: string, token: string): Promise<void> => {
+      const {error} = await useFetch(`http://localhost:4000/api/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'auth-token': token
+        },
+      })
+      
+      if (error.value) {
+        throw new Error(error.value.message || 'No data available')
+      }
+    }
+
+    const removeProductFromState = (id: string): void => {
+      products.value = products.value.filter(product => product._id !== id)
+      console.log("product deleted", id)
+    }
+
+    const deleteProduct = async (id: string): Promise<void> => {
+      try {
+
+        const {token} = getTokenAndUserId()
+        await deleteProductFromServer(id, token)
+        removeProductFromState(id);
+
+
+      } catch (err) {
+        error.value = (err as Error).message
+      }
+
+      
+    }
+
  
-  return {error, loading, products, addProduct, fetchProducts, showProduct, getTokenAndUserId, validateProduct}
+  return {error, loading, products, deleteProduct, addProduct, fetchProducts, showProduct, getTokenAndUserId, validateProduct}
 };
 

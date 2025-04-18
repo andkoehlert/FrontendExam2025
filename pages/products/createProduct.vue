@@ -35,8 +35,12 @@
     <div class="grid grid-cols-4 gap-5">
       <div v-if="loading">Loading...</div>
       <div v-for="product in products" :key="product._id">
-        <ProductCard v-if="product":product="product" />
+        <ProductCard 
+        :product="product" 
+        :onDelete="deleteProduct" 
+        />
       </div>
+      
     </div>
   </div>
 </template>
@@ -45,8 +49,7 @@
 import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProduct } from '../../composables/useProducts';
-import type {Product} from '../../interfaces/products'
-const {products, error, loading, fetchProducts, addProduct, getTokenAndUserId} = showProduct();
+const {products, error, loading, fetchProducts, addProduct, getTokenAndUserId, deleteProduct} = showProduct();
 
 onMounted(() => {
   fetchProducts();
