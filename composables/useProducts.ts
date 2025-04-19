@@ -149,7 +149,52 @@ export const showProduct = () => {
       
     }
 
- 
-  return {error, loading, products, deleteProduct, addProduct, fetchProducts, showProduct, getTokenAndUserId, validateProduct}
+    const updateProductOnServer = async (id: string, updatedProduct: Partial<Product>, token: string): Promise<Product> => {
+      const {data, error} = await useFetch(`http://localhost:4000/api/products/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
+        body: updatedProduct,
+        watch: false
+      })
+
+      if (error.value) {
+        throw new Error(error.value.message || "No data available")
+      }
+      // const responseText = await data.text() Usefetch already gives parsed data
+      if (!data.value) {
+        throw new Error("No data returned")
+      }
+      return data.value as Product
+    }
+
+    const updateProductInState = (id: string, updatedProduct: Product) => {
+      // Finding the product in the list of product based on _id
+      const index = products.value.findIndex(product => product._id === id)
+      if (index !== -1) {
+        products.value[index] = updatedProduct
+      }
+    }
+
+    const updateProduct = async (id: string, updatedProduct: Partial<Product>): Promise<void> => {
+      try {
+        // getting token
+        const {token} =  getTokenAndUserId()
+        // sending to server
+        const updatedProductResponse = await updateProductOnServer(id, updatedProduct, token)
+        // After response update
+        updateProductInState(id, updatedProductResponse)
+        // and fetch products again
+        await fetchProducts()
+
+      } catch (err) {
+          error.value = (err as Error).message
+      }
+    }
+
+
+  return {error, loading, products, deleteProduct, addProduct, fetchProducts, showProduct, getTokenAndUserId, validateProduct, updateProduct}
 };
 

@@ -38,7 +38,9 @@
         <ProductCard 
         :product="product" 
         :onDelete="deleteProduct" 
+        :onEdit="updateProductHandler"
         />
+
       </div>
       
     </div>
@@ -49,7 +51,8 @@
 import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProduct } from '../../composables/useProducts';
-const {products, error, loading, fetchProducts, addProduct, getTokenAndUserId, deleteProduct} = showProduct();
+import type { Product } from '~/interfaces/products';
+const {products, error, loading, updateProduct, fetchProducts, addProduct, getTokenAndUserId, deleteProduct} = showProduct();
 
 onMounted(() => {
   fetchProducts();
@@ -97,6 +100,21 @@ const newProduct = ref({
       arrivalDate: '',
       _createdBy: ''
 })
+
+const updateProductHandler = async (product: Product) => {
+const updatedProduct = {
+      name: product.name,
+      description: product.description,
+      imageURL: product.imageURL,
+      category: product.category,
+      quantity: product.quantity,
+      stock: product.stock,
+      supplier: product.supplier,
+      orderDate: product.orderDate,
+      arrivalDate: product.arrivalDate,
+}
+await updateProduct(product._id, updatedProduct)
+}
 
 
 </script>
