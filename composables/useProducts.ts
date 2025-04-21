@@ -65,7 +65,7 @@ export const showProduct = () => {
     return {
       name: product.name,
       description: product.description || 'New product description default value',
-      imageURL: product.imageURL || 'https://random-d.uk/api/v2/randomimg',
+      imageURL: product.imageURL || 'https://picsum.photos/500/500',
       category: product.category || 'steel',
       quantity: product.quantity || 20,
       stock: product.stock || 45,

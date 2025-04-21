@@ -17,7 +17,10 @@
   </div>
 
   <div class="flex col-span-4 flex-col justify-center items-center">
-   <div class="herosection w-[70vh] h-[70vh] rounded-xl shadlow-lg "></div>
+   <div class="herosection w-[70vh] h-[70vh] rounded-xl ">
+    <img src="../assets/images/herosection2.png" class="herosection" />
+
+   </div>
   </div>
 </div>
 
@@ -43,10 +46,13 @@ p {
 }
 
 .herosection {
-  background-image: url('../assets/images/herosection2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  
+
 }
+
+
 
 </style>
