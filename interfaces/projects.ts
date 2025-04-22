@@ -6,8 +6,8 @@ export type Project = {
   name: string;
   description: string;
   lokation: string;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date;
+  endDate?: Date;
   status: string;
   contract: string;
   _createdBy: User['id'];
