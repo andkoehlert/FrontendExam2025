@@ -14,6 +14,11 @@
     Edit
   </NuxtLink>
 
+  <button @click="onDelete(project._id)" class="bg-red-600 flex-1 text-white p-2 rounded hover:bg-red-700 mt-2">
+    Delete
+  </button>
+
+
 
   <!--   <button @click="onEdit(product)" class="bg-green-600 text-white p-2 rounded hover:bg-red-700 mt-2">
   Edit
@@ -30,7 +35,7 @@ import type { Project } from '~/interfaces/projects';
 
 const props = defineProps<{
   project: Project,
- 
+  onDelete: (id: string) => Promise<void>,
     }>()
 </script>
 

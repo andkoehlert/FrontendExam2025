@@ -6,9 +6,9 @@
    -->
 
 
-<div class="h-full grid grid-cols-12">
+<div class="h-full grid grid-cols-12 relative ">
   <div class="flex  col-span-8 flex-col justify-center items-start rounded-xl   ">
-    <div class=" border-l-2 border-black pl-10">
+    <div class=" border-l-4 border-black pl-10">
       <h3 class="ewh3 text-orange-500">ThreeBlock...</h3>
     <h2 class="font-bold">Everything you need for building</h2>
     <p>ThreeBlock provides all building blocks for your dream project</p>
@@ -43,6 +43,12 @@ h2 {
 
 p {
   font-size: 1.4rem;
+}
+
+.grid {
+  position: relative; /* gør grid-containeren til en reference for den absolutte positionering */
+  background-image: linear-gradient(to right, rgba(236, 156, 7, 0.308) 1px, transparent 1px);
+  background-size: 300px 100%; /* linjer hver 50px i bredden */
 }
 
 .herosection {

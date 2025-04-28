@@ -66,10 +66,8 @@ const addProductHandler = async () => {
   newProduct.value._createdBy = userId;
  
   const productToAdd = {
-    ...newProduct.value,
-    orderDate: newProduct.value.orderDate ? new Date(newProduct.value.orderDate) : undefined,
-    arrivalDate: newProduct.value.arrivalDate ? new Date(newProduct.value.arrivalDate) : undefined,
-  };
+  ...newProduct.value
+};
 
   try {
     await addProduct(productToAdd);

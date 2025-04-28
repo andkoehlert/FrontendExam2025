@@ -7,6 +7,10 @@ body {
   
 }
 
+:root {
+  --gutter-h: 40px; 
+}
+
 
 @layer components {
   .btn {

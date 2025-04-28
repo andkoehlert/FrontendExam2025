@@ -145,8 +145,6 @@ export const showProduct = () => {
       } catch (err) {
         error.value = (err as Error).message
       }
-
-      
     }
 
     const updateProductOnServer = async (id: string, updatedProduct: Partial<Product>, token: string): Promise<Product> => {
