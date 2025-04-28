@@ -33,7 +33,8 @@
     <div class="grid grid-cols-4 gap-5">
       <div v-if="loading">Loading...</div>
       <div v-for="project in projects" :key="project._id">
-        <ProjectCard 
+        <ProjectCard
+        :onDelete="deleteProject"  
         :project="project" 
         />
 
@@ -48,7 +49,7 @@ import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProject } from '../../composables/UseProjects';
 import type {Project } from '../../interfaces/projects'
-const {projects, error, loading, fetchProjects, addProject, getTokenAndUserId} = showProject();
+const {projects, error, loading, fetchProjects, deleteProject, addProject, getTokenAndUserId} = showProject();
 
 onMounted(() => {
   fetchProjects();

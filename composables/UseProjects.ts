@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import type { newProject, Project } from "~/interfaces/projects";
+import productsVue from "~/layouts/products.vue";
 
 
 // Using ref to save Project, error and loading
@@ -120,9 +121,83 @@ export const showProject = () => {
       }
 
 
-  return {error, loading, projects, fetchProjects, showProject, addProject, getTokenAndUserId}
+      const deleteProjectFromServer = async (id: string, token: string): Promise<void> => {
+        const {error} = await useFetch(`http://localhost:4000/api/projects/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'auth-token': token
+          },
+        })
+
+        if (error.value) {
+          throw new Error(error.value.message || 'No data available')
+        } }
+
+        const removeProjectFromState = (id: string): void => {
+          projects.value = projects.value.filter(project => project._id !== id)
+          console.log("Project deleted", id)
+        }
+
+        const deleteProject = async (id: string): Promise<void> => {
+        try {
+
+          const {token} = getTokenAndUserId()
+          await deleteProjectFromServer(id, token)
+          removeProjectFromState(id);
+        
+        } 
+        catch (err) {
+          error.value = (err as Error).message
+        }
+        }  
+        
+      const updateProjectOnServer = async (id: string, updatedProject: Partial<Project>, token: string): Promise<Project> => {
+        const {data, error} = await useFetch(`http://localhost:4000/api/projects/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+          },
+          body: updatedProject,
+          watch: false
+        })
+         if (error.value) {
+                throw new Error(error.value.message || "No data available")
+              }
+              // const responseText = await data.text() Usefetch already gives parsed data
+              if (!data.value) {
+                throw new Error("No data returned")
+              }
+              return data.value as Project
+        }
+
+        const updateProjectInState = (id: string, updatedProject: Project) => {
+          const index = projects.value.findIndex(projects => projects._id === id)
+          if (index !== -1 ) {
+            productsVue.value[index] = updatedProject
+          }
+        }
+
+        const updateProject = async(id: string, updatedProject: Partial<Project> ):Promise<void> => {
+         try {
+          const {token} = getTokenAndUserId()
+          const updatedProjectResponse = await updateProjectOnServer(id, updatedProject, token)
+          updateProjectInState(id, updatedProjectResponse)
+          await fetchProjects()
+  
+
+         } catch (err) {
+          error.value = (err as Error).message
+      }}
+       
+
+        
+
+
+  return {error, loading, projects, fetchProjects, updateProject, showProject, addProject, getTokenAndUserId, deleteProject}
 
 
 
 
-}
+}  
+      

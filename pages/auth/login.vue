@@ -23,8 +23,8 @@
           <i class="material-icons mr-2"><span class="material-symbols-outlined">login</span></i>
           <span>Login</span>
         </button>
-        <button @click="logout()" class="btn flex">
-          <i class="material-icons mr-2"><span class="material-symbols-outlined">logout</span></i>
+        <button @click="logout()" class="btn flex gap-2">
+          <i class="material-icons mr-2 order-2"><span class="material-symbols-outlined">logout</span></i>
           <span>Logout</span>
         </button>
         

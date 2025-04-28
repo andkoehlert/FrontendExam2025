@@ -10,8 +10,8 @@ export type Product = {
   quantity: number;
   stock: number;
   supplier: string;
-  orderDate?: Date;
-  arrivalDate?: Date;
+  orderDate?: string;
+  arrivalDate?: string;
   _createdBy: User['id'];
 }
 
