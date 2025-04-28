@@ -20,7 +20,7 @@
 
   <!--   <button @click="onEdit(product)" class="bg-green-600 text-white p-2 rounded hover:bg-red-700 mt-2">
   Edit
-</button> -->
+</button> test -->
   </div>
 </div>
   </div>
