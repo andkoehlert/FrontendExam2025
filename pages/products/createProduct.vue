@@ -5,6 +5,7 @@
     <div class="text-center text-red-500">{{ error }}</div>
     <div class="">
       <form @submit.prevent="addProductHandler" class="grid grid-cols-2 gap-10">
+        
         <input type="text" v-model="newProduct.name" placeholder="Name" class="p-2 border rounded" />
         <input type="text" v-model="newProduct.description"  placeholder="Description" class="p-2 border rounded" /> <!-- Product description -->
         <input type="text" v-model="newProduct.category"  placeholder="Category" class="p-2 border rounded" /> <!-- Product description -->
@@ -22,7 +23,9 @@
         <span class="uppercase font-bold">Product quantity: </span>
         <input type="number" v-model="newProduct.quantity"  placeholder="quantity" class=" pl-2 " />  <!-- Product stock -->
         </div>
-
+        <div class="p-2 border rounded col-span-2">
+  <input type="file" @change="handlePhotoUpload" />
+</div>
         <button type="submit" class="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700 col-span-2">
         Create
         </button>
@@ -87,6 +90,32 @@ const addProductHandler = async () => {
     console.log('Error', err)
   }
 }
+
+const handlePhotoUpload = async (event: Event) => {
+
+  // Tell TS it's a input element
+  const photoInput = event.target as HTMLInputElement;
+  if (!photoInput.files || photoInput.files.length === 0) return;
+
+
+  const file = photoInput.files[0];
+  const formData = new FormData();
+  formData.append('image', file);
+
+  try {
+    const res = await fetch('http://localhost:4000/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await res.json();
+    console.log('Uploaded image:', data);
+
+    newProduct.value.imageURL = data.url; 
+  } catch (err) {
+    console.error('Image upload failed:', err);
+  }
+};
 
 const newProduct = ref({
       name: '',
