@@ -1,4 +1,10 @@
 import type { User } from './users';
+import type { Product } from './products';
+
+export type ProjectProduct = {
+  productId: Product['_id'];
+  quantity: number;
+};
 
 export type Project = {
   
@@ -11,6 +17,7 @@ export type Project = {
   status: string;
   contract: string;
   _createdBy: User['id'];
+  products?: ProjectProduct[];
 }
 
 export type newProject = Omit<Project, '_id'> & {
