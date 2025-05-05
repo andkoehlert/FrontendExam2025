@@ -63,18 +63,7 @@ export const showProject = () => {
 
 
     
-      const setDefaultValues = (project: newProject, userId: string) => {
-        return {
-          name: project.name || 'Varde 20',
-          description: project.description || 'New project description default value',
-          lokation: project.lokation || 'Varde',
-          startDate: project.startDate || Date,
-          endDate: project.endDate || Date,
-          status: project.status || 'not-started', 
-          contract: project.contract || 'Unknown',
-          _createdBy: userId
-        }
-      }
+      
     
       const addProject = async (project: newProject): Promise<void> => {
       
@@ -83,9 +72,13 @@ export const showProject = () => {
 
         try {
           // validate
-          validateProject(project)
-          const defaultValues = setDefaultValues(project, userId)
+          validateProject(project);
+         // const defaultValues = setDefaultValues(project, userId)
 
+         const projectData = {
+          ...project, // use everything as-is from projectToAdd
+          products: project.products // this ensures the array gets passed through
+        };
           // fetch
           const {data, error, execute} = await useLazyFetch<Project>('http://localhost:4000/api/projects',{
             method: 'POST',
@@ -93,7 +86,7 @@ export const showProject = () => {
               'Content-Type': 'application/json',
               'auth-token': token
             },
-            body:  defaultValues , 
+            body:  projectData , 
             immediate: false,
           })
 
