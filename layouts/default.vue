@@ -17,6 +17,8 @@
           <li><NuxtLink to="/about" class="py-2 px-4">About</NuxtLink></li>
           <li><NuxtLink to="/products/createProduct" class="py-2 px-4">Create product</NuxtLink></li>
           <li><NuxtLink to="/projects/createProject" class="py-2 px-4">Create project</NuxtLink></li>
+          <li><NuxtLink to="/employee/createEmployee" class="py-2 px-4">Create Employee</NuxtLink></li>
+
           <li><NuxtLink to="/products" class="py-2 px-4">Products</NuxtLink></li>
           <li><NuxtLink to="/auth/login" class="py-2 px-4">Login</NuxtLink></li>
         </ul>
