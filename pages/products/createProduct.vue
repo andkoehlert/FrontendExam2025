@@ -1,4 +1,5 @@
 <template>
+  
   <div class="card"> 
     <h1>Create Product</h1>
 
@@ -51,6 +52,8 @@
 </template>
 
 <script setup lang="ts">
+
+
 import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProduct } from '../../composables/useProducts';

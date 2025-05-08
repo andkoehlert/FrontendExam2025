@@ -108,6 +108,9 @@
 </template>
 
 <script setup lang="ts">
+
+
+
 import { ref, onMounted } from 'vue';
 import { showProject } from '../../composables/UseProjects';
 import { showProduct } from '../../composables/useProducts';
