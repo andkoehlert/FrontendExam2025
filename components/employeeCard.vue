@@ -4,7 +4,7 @@
     <div class="">
     <h2 class="front-bold text gray-500 m-4 truncate">{{ employee.name }}</h2>
 
-    <NuxtLink :to="`/products/${employee._id}`">
+    <NuxtLink :to="`/employee/${employee._id}`">
       <p class="btn my-4">View Details</p>
     </NuxtLink>
 
@@ -14,7 +14,7 @@
     Delete
   </button>
 
-  <NuxtLink :to="`/products/edit/${employee._id}`" class="bg-green-600 text-white flex-1 p-2 rounded hover:bg-green-700 mt-2 text-center">
+  <NuxtLink :to="`/employee/edit/${employee._id}`" class="bg-green-600 text-white flex-1 p-2 rounded hover:bg-green-700 mt-2 text-center">
     Edit
   </NuxtLink>
 
@@ -35,6 +35,7 @@ import type { Employee } from '~/interfaces/employees';
 const props = defineProps<{
   employee: Employee,
   onDelete: (id: string) => Promise<void>,
+    onEdit: (employee: Employee) => Promise<void> 
 
     }>()
 </script>

@@ -5,7 +5,6 @@ import type { LoginResponse } from '../../interfaces/auth';
 import { useFetch } from '#app'
 import type {AuthResponse} from '../../composables/auth/auth'
 
-
 export const useUsers = () => {
   
   // state management
@@ -19,6 +18,39 @@ export const useUsers = () => {
   const email = ref<string>('');
   const password = ref<string>('');
   const router = useRouter()
+
+
+  // Check for the token in localStorage when the page is loaded
+  onMounted(() => {
+    const storedToken = localStorage.getItem('lsToken');
+    if (storedToken) {
+      token.value = storedToken;
+      isLoggedIn.value = true;
+   //   fetchUserData(storedToken);
+    }
+  });
+/* 
+  // Function to fetch user data using the token
+  const fetchUserData = async (storedToken: string) => {
+    try {
+      const response = await fetch('http://localhost:4000/api/user/profile', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${storedToken}`,
+        },
+      });
+      
+      if (response.ok) {
+        const userData = await response.json();
+        user.value = userData.data;
+      } else {
+        console.error('Error fetching user data');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+ */
 
  // login logic
 const fetchToken = async (email: string, password: string): Promise<void> => {

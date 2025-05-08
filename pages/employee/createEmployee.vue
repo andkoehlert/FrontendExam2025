@@ -31,6 +31,7 @@
         <EmployeeCard 
         :employee="employee"
         :onDelete="deleteEmployee" 
+        :onEdit="updateEmployeeHandler"
 
         />
 
@@ -41,6 +42,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: 'auth'
+})
+
 import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showEmployee } from '../../composables/useEmployees';
@@ -51,6 +56,7 @@ const {
   loading,  
   fetchEmployees, 
   addEmployee,
+  updateEmployee,
   deleteEmployee, 
   getTokenAndUserId}
   = showEmployee();
@@ -120,20 +126,18 @@ const newEmployee = ref({
   _createdBy: ''
 })
 
-/* const updateProductHandler = async (product: Product) => {
-const updatedProduct = {
-      name: product.name,
-      description: product.description,
-      imageURL: product.imageURL,
-      category: product.category,
-      quantity: product.quantity,
-      stock: product.stock,
-      supplier: product.supplier,
-      orderDate: product.orderDate,
-      arrivalDate: product.arrivalDate,
+ const updateEmployeeHandler = async (employee: Employee) => {
+const updatedEmployee = {
+      name: employee.name,
+      description: employee.description,
+      imageURL: employee.profileImage,
+      position: employee.position,
+      bio: employee.bio,
+      email: employee.email,
+      
 }
-await updateProduct(product._id, updatedProduct)
-} */
+await updateEmployee(employee._id, updatedEmployee)
+} 
 
 
 </script>

@@ -14,7 +14,7 @@ export const showProduct = () => {
     loading.value = true;
   
     try {
-      const {data, error: fetchError, execute} = await useLazyFetch<Product[]>('http://localhost:4000/api/products', {
+      const {data, error: fetchError, execute} = await useLazyFetch<Product[]>('https://fullstackexam2025backend.onrender.com/api/products', {
         method: 'GET',
         // venter med at fetch til jeg selv klader den(execute)
         immediate: false, 
@@ -86,7 +86,7 @@ export const showProduct = () => {
 
       const productDefaults = setDefaultValues(product, userId)
 
-      const {data, error, execute} = await useLazyFetch<Product>('http://localhost:4000/api/products', {
+      const {data, error, execute} = await useLazyFetch<Product>('https://fullstackexam2025backend.onrender.com/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ export const showProduct = () => {
 
 
     const deleteProductFromServer = async (id: string, token: string): Promise<void> => {
-      const {error} = await useFetch(`http://localhost:4000/api/products/${id}`, {
+      const {error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/products/${id}`, {
         method: 'DELETE',
         headers: {
           'auth-token': token
@@ -148,7 +148,7 @@ export const showProduct = () => {
     }
 
     const updateProductOnServer = async (id: string, updatedProduct: Partial<Product>, token: string): Promise<Product> => {
-      const {data, error} = await useFetch(`http://localhost:4000/api/products/${id}`, {
+      const {data, error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/products/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

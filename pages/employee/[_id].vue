@@ -1,14 +1,14 @@
 <template>
-  <div v-if="project">
+  <div v-if="employee">
     <Head>
-      <Title>Projects page {{ project.name }}</Title>
-      <Meta name="description" :content="project.description" />
+      <Title>Employees page {{ employee.name }}</Title>
+      <Meta name="description" :content="employee.description" />
     </Head>
 
-    <!-- Send as a prob to productDetails-->
-    <ProjectDetails 
-    v-if="project"
-    :project="project"
+    <!-- Send as a prob to EmployeeDetails-->
+    <EmployeeDetails 
+    v-if="employee"
+    :employee="employee"
     />
   </div>
   <div v-else>
@@ -22,27 +22,27 @@ definePageMeta({
 })
 
 import { ref, onMounted } from 'vue';
-import { showProject } from '~/composables/UseProjects';  // Import your composable
-import type { Project } from '~/interfaces/projects';
+import { showEmployee } from '../../composables/useEmployees';  // Import your composable
+import type { Employee } from '~/interfaces/employees';
 
-const { projects, error, loading, fetchProjects } = showProject();
+const { employees, error, loading, fetchEmployees } = showEmployee();
 
 // to get the id from the url
 const route = useRoute();
 const id = route.params._id as string;
 
 // ref to hold the current product
-const project = ref<Project | null>(null);
+const employee = ref<Employee | null>(null);
 
 // fetching products and find the specific product by matching id
-const getSpecificProject = async () => {
-await fetchProjects();
+const getSpecificEmployee = async () => {
+await fetchEmployees();
 // .value because we use ref
-project.value = projects.value.find((specificProj: Project) => specificProj._id === id) || null;
+employee.value = employees.value.find((specificEmpl: Employee) => specificEmpl._id === id) || null;
 }
 
 onMounted(() => {
-  getSpecificProject()
+  getSpecificEmployee()
 })
 
 /* 

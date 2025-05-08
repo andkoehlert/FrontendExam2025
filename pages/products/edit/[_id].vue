@@ -57,6 +57,11 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  middleware: 'auth'
+})
+
 import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProduct } from '../../../composables/useProducts';

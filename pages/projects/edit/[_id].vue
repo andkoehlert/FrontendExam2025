@@ -49,6 +49,11 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  middleware: 'auth'
+})
+
 import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProject } from '../../../composables/UseProjects';

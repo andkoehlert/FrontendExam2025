@@ -142,8 +142,54 @@ export const showEmployee = () => {
       }
     }
 
+    const updateEmployeeOnServer = async(
+      id: string, 
+      updatedEmployee: Partial<Employee>, 
+      token: string): Promise<Employee> => {
+
+        const {data, error} = await useFetch(`http://localhost:4000/api/employees/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+          },
+          body: updatedEmployee,
+          watch: false
+        })
+
+        if (error.value) {
+          throw new Error(error.value.message || "No data available")
+        }
+
+        if (!data.value) {
+          throw new Error("No data returned")
+        }
+
+        return data.value as Employee
+    }
+
+      const updateEmployeeInState = (id: string, updatedEmployee: Employee) => {
+        const index = employees.value.findIndex(employee => employee._id === id)
+        if (index !== -1) {
+          employees.value[index] = updatedEmployee
+        }
+      }
+
+      const updateEmployee = async(
+        id: string, 
+        updatedEmployee: Partial<Employee>): Promise<void> => {
+        try {
+          const {token} =  getTokenAndUserId()
+          const updatedEmployeeResponse = await updateEmployeeOnServer(id, updatedEmployee, token)
+          updateEmployeeInState(id, updatedEmployeeResponse)
+          await fetchEmployees()
+
+        } catch (err) {
+            error.value = (err as Error).message
+        }
+      }
 
 
-  return {employees, error, loading, showEmployee, deleteEmployee, fetchEmployees, addEmployee, getTokenAndUserId, }
+  return {employees, error, loading, updateEmployee, showEmployee, deleteEmployee, fetchEmployees, addEmployee, getTokenAndUserId, }
 
 }

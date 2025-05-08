@@ -15,12 +15,18 @@
         <ul :class="{'flex-col': isMenuOpen, 'hidden': !isMenuOpen, 'lg:flex': true, 'lg:flex-row': !isMenuOpen}" class="flex gap-10 items-center transition-all">
           <li><NuxtLink to="/" class="py-2 px-4">Home</NuxtLink></li>
           <li><NuxtLink to="/about" class="py-2 px-4">About</NuxtLink></li>
-          <li><NuxtLink to="/products/createProduct" class="py-2 px-4">Create product</NuxtLink></li>
-          <li><NuxtLink to="/projects/createProject" class="py-2 px-4">Create project</NuxtLink></li>
-          <li><NuxtLink to="/employee/createEmployee" class="py-2 px-4">Create Employee</NuxtLink></li>
+          <li><NuxtLink v-if="isLoggedIn" to="/products/createProduct" class="py-2 px-4">Create product</NuxtLink></li>
+          <li><NuxtLink v-if="isLoggedIn" to="/projects/createProject" class="py-2 px-4">Create project</NuxtLink></li>
+          <li><NuxtLink v-if="isLoggedIn" to="/employee/createEmployee" class="py-2 px-4">Create Employee</NuxtLink></li>
 
           <li><NuxtLink to="/products" class="py-2 px-4">Products</NuxtLink></li>
-          <li><NuxtLink to="/auth/login" class="py-2 px-4">Login</NuxtLink></li>
+          <li v-if="!isLoggedIn">
+  <NuxtLink to="/auth/login" class="py-2 px-4">Login</NuxtLink>
+</li>
+<li v-else>
+  <button @click="logout" class="py-2 px-4 hover:underline">Logout</button>
+</li>
+          
         </ul>
       </nav>
     </header>
@@ -34,6 +40,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import {useAuthState} from '../composables/auth/useAuthState'
+import {useUsers} from '../composables/auth/user'
+
+const isLoggedIn = useAuthState()
+const {logout} = useUsers()
 
 // Reaktiv tilstand til at styre åbning/lukning af menu
 const isMenuOpen = ref(false);
