@@ -109,6 +109,9 @@
 
 <script setup lang="ts">
 
+definePageMeta({
+  middleware: 'auth'
+})
 
 
 import { ref, onMounted } from 'vue';
@@ -207,12 +210,19 @@ const addProjectHandler = async () => {
 
   newProject.value.employees = selectedEmployeeIds.value.map(id => ({employeeId: id}));
 
+
+  const normalizeDate = (dateString: string) => {
+  const date = new Date(dateString);
+  date.setUTCHours(12, 0, 0, 0); // Set to noon UTC to avoid timezone shift
+  return date;
+};
+
   const projectToAdd = {
     ...newProject.value,
     _createdBy: userId,
-    startDate: newProject.value.startDate ? new Date(newProject.value.startDate) : undefined,
-    endDate: newProject.value.endDate ? new Date(newProject.value.endDate) : undefined,
-  };
+    startDate: newProject.value.startDate ? normalizeDate(newProject.value.startDate) : undefined,
+    endDate: newProject.value.endDate ? normalizeDate(newProject.value.endDate) : undefined,
+ };
 
   try {
     await addProject(projectToAdd);

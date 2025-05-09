@@ -32,7 +32,7 @@
         <span class="font-normal">{{ project.lokation }}</span></h3>
         <h3 class=" font-bold text-xl my-7">Order Date: 
         <span class="font-normal"> {{ project.startDate }}</span></h3>
-        <h3 class="font-bold text-xl my-7">Order Date: 
+        <h3 class="font-bold text-xl my-7">End Date: 
           <span class="font-normal"> {{ project.endDate }}</span></h3>
 
         <h3 class=" font-bold text-xl my-7"> Project description: <span class="font-normal">{{ project.description }}</span></h3>

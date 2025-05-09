@@ -1,14 +1,14 @@
 <template>
-  <div v-if="product">
+  <div v-if="post">
     <Head>
-      <Title>Products page {{ product.name }}</Title>
-      <Meta name="description" :content="product.description" />
+      <Title>Post {{ post.title }}</Title>
+      <Meta name="description" :contents="post.content" />
     </Head>
 
     <!-- Send as a prob to productDetails-->
-    <ProductDetails 
-    v-if="product"
-    :product="product"
+    <EditorViewPost
+    v-if="post"
+    :post="post"
     />
   </div>
   <div v-else>
@@ -24,23 +24,23 @@ definePageMeta({
 
 
 import { ref, onMounted } from 'vue';
-import { showProduct } from '~/composables/useProducts';  // Import your composable
-import type { Product } from '~/interfaces/products';
+import { showPost } from '~/composables/editor';  // Import your composable
+import type { Post } from '~/interfaces/post';
 
-const { products, error, loading, fetchProducts } = showProduct();
+const { posts, error, loading, fetchPosts } = showPost();
 
 // to get the id from the url
 const route = useRoute();
 const id = route.params._id as string;
 
 // ref to hold the current product
-const product = ref<Product | null>(null);
+const post = ref<Post | null>(null);
 
 // fetching products and find the specific product by matching id
 const getSpecificProduct = async () => {
-await fetchProducts();
+await fetchPosts();
 // .value because we use ref
-product.value = products.value.find((specificProd: Product) => specificProd._id === id) || null;
+post.value = posts.value.find((specificPost: Post) => specificPost._id === id) || null;
 }
 
 onMounted(() => {
