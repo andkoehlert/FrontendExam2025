@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import ProjectStatusChart from '~/components/ProjectStatusChart.vue'
+import projectStatusChart from '~/components/projectStatusChart.vue'
 import projectLocationChart from '~/components/projectLocationChart.vue'
+
 interface Project {
   status: string
   [key: string]: any
