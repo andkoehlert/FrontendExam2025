@@ -14,11 +14,49 @@
         <!-- Navbar Links -->
         <ul :class="{'flex-col': isMenuOpen, 'hidden': !isMenuOpen, 'lg:flex': true, 'lg:flex-row': !isMenuOpen}" class="flex gap-10 items-center transition-all">
           <li><NuxtLink to="/" class="py-2 px-4">Home</NuxtLink></li>
+          <li><NuxtLink v-if="isLoggedIn" to="/dashboard/dashboard" class="py-2 px-4">Dashboard</NuxtLink></li>
           <li><NuxtLink to="/about" class="py-2 px-4">About</NuxtLink></li>
-          <li><NuxtLink v-if="isLoggedIn" to="/products/createProduct" class="py-2 px-4">Create product</NuxtLink></li>
-          <li><NuxtLink v-if="isLoggedIn" to="/projects/createProject" class="py-2 px-4">Create project</NuxtLink></li>
-          <li><NuxtLink v-if="isLoggedIn" to="/employee/createEmployee" class="py-2 px-4">Create Employee</NuxtLink></li>
+        <li class="relative" v-if="isLoggedIn">
+  <button
+    @click="isDropdownOpen = !isDropdownOpen"
+    class="py-2 px-4 flex items-center gap-1 hover:bg-gray-100 rounded"
+  >
+    Create
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
 
+  <div
+    v-if="isDropdownOpen"
+    class="absolute top-full mt-1 w-48 bg-white shadow-lg border rounded z-50"
+  >
+    <NuxtLink
+      to="/products/createProduct"
+      class="block px-4 py-2 hover:bg-gray-100"
+    >
+      Create Product
+    </NuxtLink>
+      <NuxtLink
+      to="/editor/editor"
+      class="block px-4 py-2 hover:bg-gray-100"
+    >
+      Editor
+    </NuxtLink>
+    <NuxtLink
+      to="/projects/createProject"
+      class="block px-4 py-2 hover:bg-gray-100"
+    >
+      Create Project
+    </NuxtLink>
+    <NuxtLink
+      to="/employee/createEmployee"
+      class="block px-4 py-2 hover:bg-gray-100"
+    >
+      Create Employee
+    </NuxtLink>
+  </div>
+</li>
           <li><NuxtLink to="/products" class="py-2 px-4">Products</NuxtLink></li>
           <li v-if="!isLoggedIn">
   <NuxtLink to="/auth/login" class="py-2 px-4">Login</NuxtLink>
@@ -42,6 +80,7 @@
 import { ref } from 'vue';
 import {useAuthState} from '../composables/auth/useAuthState'
 import {useUsers} from '../composables/auth/user'
+const isDropdownOpen = ref(false);
 
 const isLoggedIn = useAuthState()
 const {logout} = useUsers()

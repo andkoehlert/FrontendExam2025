@@ -37,6 +37,27 @@ export const showProject = () => {
     }
   }
 
+  const fetchProjectsByStatus = async (status: string | null = null) => {
+    loading.value = true
+    try {
+      const response = await fetch(
+        status
+          ? `http://localhost:4000/api/projects/status/${status}`  // Fetch by specific status
+          : 'http://localhost:4000/api/projects' // If no status, fetch all projects
+      )
+      
+      if (!response.ok) throw new Error('Failed to fetch projects')
+      
+      const data = await response.json()
+      projects.value = data
+    } catch (err) {
+      error.value = (err as Error).message;
+    } finally {
+      loading.value = false
+    }
+  }
+
+ 
 
 
   
@@ -187,7 +208,7 @@ export const showProject = () => {
         
 
 
-  return {error, loading, projects, fetchProjects, updateProject, showProject, addProject, getTokenAndUserId, deleteProject}
+  return {error, loading, projects, fetchProjectsByStatus, fetchProjects, updateProject, showProject, addProject, getTokenAndUserId, deleteProject}
 
 
 

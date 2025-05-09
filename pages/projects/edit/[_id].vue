@@ -11,9 +11,15 @@
         <input type="text" v-model="project.name" placeholder="Name" class="p-2 border rounded" />
         <input type="text" v-model="project.description" placeholder="Description" class="p-2 border rounded" />
         <input type="text" v-model="project.lokation" placeholder="Lokation" class="p-2 border rounded" />
-        <input type="text" v-model="project.startDate" placeholder="Start Date" class="p-2 border rounded" />
+        <input type="date" v-model="project.startDate" placeholder="Start Date" class="p-2 border rounded" />
         <input type="date" v-model="project.endDate" placeholder="End Date" class="p-2 border rounded" />
-        <input type="date" v-model="project.status" placeholder="Arrival Date" class="p-2 border rounded" />
+        <select v-model="project.status" class="p-2 border rounded" required>
+  <option value="" disabled>Select Status</option>
+  <option value="not-started">Not Started</option>
+  <option value="in-progress">In Progress</option>
+  <option value="completed">Completed</option>
+  <option value="delayed">Delayed</option>
+</select>
         <input type="text" v-model="project.contract" placeholder="Image URL" class="p-2 border rounded h-10" />
 
    
@@ -69,11 +75,20 @@ const project = ref<Project | null>(null);
 const loading = ref(true);
 const error = ref('');
 
+const formatDate = (isoString: string): string => {
+  return isoString?.slice(0, 10);
+};
+
 const getSpecificProject = async () => {
   try {
     await fetchProjects();
-    project.value = projects.value.find((specificProj: Project) => specificProj._id === id) || null;
-    if (!project.value) error.value = 'Product not found';
+    const found = projects.value.find((specificProj: Project) => specificProj._id === id) || null;
+    if (found) {
+      // format the dates for input fields
+      found.startDate = formatDate(found.startDate as string);
+      found.endDate = formatDate(found.endDate as string);
+    }
+    project.value = found;
   } catch (e) {
     error.value = 'Error fetching product';
   } finally {

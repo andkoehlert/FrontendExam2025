@@ -14,7 +14,7 @@ body {
 
 @layer components {
   .btn {
-    @apply bg-[#122b88] text-white px-3 py-2 rounded-md text-sm text-white;
+    @apply bg-[#00DC82] text-white px-3 py-2 rounded-md text-sm text-white;
   }
   .card {
     @apply p-3 rounded-md bg-white shadow-md h-full;
@@ -25,8 +25,14 @@ body {
     margin: 0 auto;
     border-radius: 0.375rem;
   }
+  h3 {
+    font-size: 1.5rem;
+  }
   h2 {
     font-size: 2rem;
+  }
+  h1 {
+    font-size: 3rem;
   }
 }
 

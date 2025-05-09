@@ -10,10 +10,17 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "@sidebase/nuxt-auth": "^0.10.1",
+    "@tiptap/extension-image": "^2.12.0",
+    "browser-image-resizer": "^2.4.1",
+    "chart.js": "^4.4.9",
     "next-auth": "~4.21.1",
     "nuxt": "^3.16.1",
+    "nuxt-charts": "^0.1.8",
+    "nuxt-tiptap-editor": "^2.2.1",
     "vue": "^3.5.13",
+    "vue-chartjs": "^5.3.2",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
