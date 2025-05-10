@@ -24,10 +24,30 @@
   </div>
 </div>
 
+  <div class="pt-10">
+  <h1>Latest news..</h1>
+
+    <div class="grid grid-cols-4 gap-5">
+      <div v-if="loading">Loading...</div>
+      <div v-for="post in posts" :key="post._id">
+        <EditorCardNews 
+        :post="post" 
+        />
+      </div>
+      </div>
+  </div>
+
 </template>
 
-<script setup>
- 
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import { showPost } from '../composables/editor';
+import type { Post } from '~/interfaces/post';
+const {posts, error, loading, fetchPosts, } = showPost();
+
+onMounted(() => {
+  fetchPosts();
+});
 </script>
 
 <style  scoped>

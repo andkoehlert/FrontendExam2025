@@ -7,7 +7,7 @@
     <div class="">
       <form @submit.prevent="addProductHandler" class="grid grid-cols-2 gap-10">
         
-        <input type="text" v-model="newProduct.name" placeholder="Name" class="p-2 border rounded" />
+        <input type="text" v-model="newProduct.name" placeholder="Name" class="p-2 border rounded" required  />
         <input type="text" v-model="newProduct.description"  placeholder="Description" class="p-2 border rounded" /> <!-- Product description -->
         <input type="text" v-model="newProduct.category"  placeholder="Category" class="p-2 border rounded" /> <!-- Product description -->
         <input type="text" v-model="newProduct.supplier"  placeholder="supplier" class="p-2 border rounded" /> <!-- Product description -->

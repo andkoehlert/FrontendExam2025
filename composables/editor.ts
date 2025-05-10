@@ -34,7 +34,33 @@ export const showPost = () => {
       loading.value = false;
     }
   }
-  
+
+const fetchPostById = async (id: string): Promise<Post | null> => {
+  loading.value = true;
+  try {
+    const { data, error: fetchError } = await useFetch<Post | Post[]>(`http://localhost:4000/api/posts/${id}`, {
+      method: 'GET',
+      watch: false
+    });
+
+    if (fetchError.value) {
+      throw new Error(fetchError.value.message || "Failed to fetch post");
+    }
+
+    if (!data.value) {
+      return null;
+    }
+
+    const postData = Array.isArray(data.value) ? data.value[0] : data.value;
+
+    return postData;
+  } catch (err) {
+    error.value = (err as Error).message;
+    return null;
+  } finally {
+    loading.value = false;
+  }
+};
 
 
   const getTokenAndUserId = (): {token: string, userId: string} => {
@@ -108,9 +134,88 @@ export const showPost = () => {
         console.error('Error adding post:', err)
         error.value = (err as Error).message
         throw err;
-      }
-          
+      }    
   }
-  return {posts, error, loading, showPost, fetchPosts, addPost, getTokenAndUserId, }
+
+
+    const deletePostFromServer = async (id: string, token: string): Promise<void> => {
+      const {error} = await useFetch(`http://localhost:4000/api/post/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'auth-token': token
+        },
+      })
+      
+      if (error.value) {
+        throw new Error(error.value.message || 'No data available')
+      }
+    }
+
+    const removePostFromState = (id: string): void => {
+      posts.value = posts.value.filter(post => post._id !== id)
+      console.log("post deleted", id)
+    }
+
+    const deletePost = async (id: string): Promise<void> => {
+      try {
+
+        const {token} = getTokenAndUserId()
+        await deletePostFromServer(id, token)
+        removePostFromState(id);
+
+
+      } catch (err) {
+        error.value = (err as Error).message
+      }
+    }
+
+    const updatePostOnServer = async (id: string, updatedPost: Partial<Post>, token: string): Promise<Post> => {
+      const {data, error} = await useFetch(`http://localhost:4000/api/posts/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
+        body: updatedPost,
+        watch: false
+      })
+
+      if (error.value) {
+        throw new Error(error.value.message || "No data available")
+      }
+      // const responseText = await data.text() Usefetch already gives parsed data
+      if (!data.value) {
+        throw new Error("No data returned")
+      }
+      return data.value as Post
+    }
+
+    const updatePostInState = (id: string, updatedPost: Post) => {
+      // Finding the product in the list of product based on _id
+      const index = posts.value.findIndex(post => post._id === id)
+      if (index !== -1) {
+        posts.value[index] = updatedPost
+      }
+    }
+
+    const updatePost = async (id: string, updatedProduct: Partial<Post>): Promise<void> => {
+      try {
+        // getting token
+        const {token} =  getTokenAndUserId()
+        // sending to server
+        const updatedPostResponse = await updatePostOnServer(id, updatedProduct, token)
+        // After response update
+        updatePostInState(id, updatedPostResponse)
+        // and fetch products again
+        await fetchPosts()
+
+      } catch (err) {
+          error.value = (err as Error).message
+      }
+    }
+
+
+
+  return {posts, error, loading, fetchPostById, showPost, updatePost, deletePost, fetchPosts, addPost, getTokenAndUserId, }
 
 }

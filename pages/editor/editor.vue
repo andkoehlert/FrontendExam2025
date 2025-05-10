@@ -1,15 +1,25 @@
 <template>
-  <div class="">
-    <h1>Write your post here</h1>
-    <p class="mt-4 mb-4">Please write a title..</p>
-    <input v-model="newPost.title" placeholder="Title" class="input" />
-    <input v-model="newPost.authorId" placeholder="Author" class="input" />
+<form @submit.prevent="submitPost">
+  <h1>Write your post here</h1>
+  <p class="mt-4 mb-4">Please write a title..</p>
 
+  <input
+    v-model="newPost.title"
+    placeholder="Title"
+    class="input"
+    required
+  />
 
-    <Editor ref="editorComponent" />
+  <input
+    v-model="newPost.authorId"
+    placeholder="Author"
+    class="input"
+  />
 
-    <button class="btn my-4" @click="submitPost">Publish</button>
-  </div>
+  <Editor ref="editorComponent" />
+
+  <button type="submit" class="btn my-4">Publish</button>
+</form>
   <!--Existing posts-->
   <div class="pt-10">
     <div class="grid grid-cols-4 gap-5">
@@ -17,7 +27,7 @@
       <div v-for="post in posts" :key="post._id">
         <EditorCard 
         :post="post" 
-        
+        :onDelete="deletePost" 
         />
 
       </div>
@@ -34,7 +44,7 @@ import type { JSONContent } from '@tiptap/vue-3'
 import { onMounted } from 'vue';
 import { showPost } from '../../composables/editor';
 import type { Post } from '~/interfaces/post';
-const {posts, error, loading, fetchPosts, addPost, getTokenAndUserId} = showPost();
+const {posts, error, loading, fetchPosts, addPost, getTokenAndUserId, deletePost} = showPost();
 
 onMounted(() => {
   fetchPosts();
@@ -85,3 +95,11 @@ const editorComponent = ref<{ editor: { getJSON: () => JSONContent } } | null>(n
   // Later: await $fetch('/api/news', { method: 'POST', body: payload })
 
 </script>
+
+<style>
+.ProseMirror {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: solid;
+}
+</style>
