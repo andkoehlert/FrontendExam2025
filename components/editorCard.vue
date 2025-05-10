@@ -10,8 +10,15 @@
       <p class="btn my-4">View post</p>
     </NuxtLink>
 
+      <NuxtLink :to="`/editor/edit/${post._id}`" class="">
+   <p class="btn">Edit</p> 
+  </NuxtLink>
     <div class="flex gap-10 justify-center">
-
+ 
+      <button @click="onDelete(post._id)" class="bg-red-600 flex-1 text-white p-2 rounded hover:bg-red-700 mt-2">
+    Delete
+  </button>
+      
 
 
 
@@ -30,7 +37,8 @@ import type { Post } from '~/interfaces/post';
 
 const props = defineProps<{
   post: Post,
- 
+  onDelete: (id: string) => Promise<void>,
+
 
     }>()
 </script>
