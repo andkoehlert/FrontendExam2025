@@ -29,6 +29,8 @@
           <span class="uppercase font-bold">End date: </span>
           <input type="date" v-model="newProject.endDate" class="p-2 border rounded" />
         </div>
+        <input type="number" v-model="newProject.price" placeholder="Price" class="p-2 border rounded" required />
+        
 
         <!-- Product Selection Section -->
         <div class="col-span-2 border p-4 rounded-lg">
@@ -161,6 +163,8 @@ const newProject = ref({
   lokation: '',
   startDate: '',
   endDate: '',
+  price: '',
+  totalPrice: '',
   status: '',
   contract: 'not-started',
   _createdBy: '',
@@ -235,6 +239,8 @@ const addProjectHandler = async () => {
       startDate: '',
       endDate: '',
       status: '',
+      price: '',
+      totalPrice: '',
       contract: 'not-started',
       _createdBy: '',
       products: [],

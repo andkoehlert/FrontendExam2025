@@ -2,7 +2,11 @@ import type { User } from './users';
 import type { Product } from './products';
 import type { Employee } from './employees';
 export type ProjectProduct = {
-  productId: Product['_id'];
+  productId: {
+    _id: string;
+    name: string;
+    price: number;
+  };
   quantity: number;
 };
 export type ProjectEmployee = {
@@ -19,6 +23,8 @@ export type Project = {
   lokation: string;
   startDate?: string | Date;
   endDate?: string | Date;
+  price: number;
+  totalPrice: number,
   status: string;
   contract: string;
   _createdBy: User['id'];
