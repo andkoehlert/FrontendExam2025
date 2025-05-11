@@ -12,7 +12,7 @@ export const showEmployee = () => {
     loading.value = true;
 
     try {
-      const {data, error: fetchError, execute} = await useLazyFetch<Employee[]>('http://localhost:4000/api/employees', {
+      const {data, error: fetchError, execute} = await useLazyFetch<Employee[]>('https://fullstackexam2025backend.onrender.com/api/employees', {
         method: 'GET',
 
         immediate: false, 
@@ -82,7 +82,7 @@ export const showEmployee = () => {
   
         const employeeDefaults = setDefaultValues(employee, userId)
   
-        const {data, error, execute} = await useLazyFetch<Employee>('http://localhost:4000/api/employee', {
+        const {data, error, execute} = await useLazyFetch<Employee>('https://fullstackexam2025backend.onrender.com/api/employee', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export const showEmployee = () => {
     }
   
     const deleteEmployeeFromServer = async (id: string, token: string): Promise<void> => {
-      const {error} = await useFetch(`http://localhost:4000/api/employees/${id}`, {
+      const {error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/employees/${id}`, {
         method: 'DELETE',
         headers: {
           'auth-token': token
@@ -147,7 +147,7 @@ export const showEmployee = () => {
       updatedEmployee: Partial<Employee>, 
       token: string): Promise<Employee> => {
 
-        const {data, error} = await useFetch(`http://localhost:4000/api/employees/${id}`, {
+        const {data, error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/employees/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

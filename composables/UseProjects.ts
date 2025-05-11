@@ -15,7 +15,7 @@ export const showProject = () => {
     loading.value = true;
   
     try {
-      const {data, error: fetchError, execute} = await useLazyFetch<Project[]>('http://localhost:4000/api/projects', {
+      const {data, error: fetchError, execute} = await useLazyFetch<Project[]>('https://fullstackexam2025backend.onrender.com/api/projects', {
         method: 'GET',
         // venter med at fetch til jeg selv klader den(execute)
         immediate: false, 
@@ -42,8 +42,8 @@ export const showProject = () => {
     try {
       const response = await fetch(
         status
-          ? `http://localhost:4000/api/projects/status/${status}`  // Fetch by specific status
-          : 'http://localhost:4000/api/projects' // If no status, fetch all projects
+          ? `https://fullstackexam2025backend.onrender.com/api/projects/status/${status}`  // Fetch by specific status
+          : 'https://fullstackexam2025backend.onrender.com/api/projects' // If no status, fetch all projects
       )
       
       if (!response.ok) throw new Error('Failed to fetch projects')
@@ -101,7 +101,7 @@ export const showProject = () => {
           products: project.products // this ensures the array gets passed through
         };
           // fetch
-          const {data, error, execute} = await useLazyFetch<Project>('http://localhost:4000/api/projects',{
+          const {data, error, execute} = await useLazyFetch<Project>('https://fullstackexam2025backend.onrender.com/api/projects',{
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ export const showProject = () => {
 
 
       const deleteProjectFromServer = async (id: string, token: string): Promise<void> => {
-        const {error} = await useFetch(`http://localhost:4000/api/projects/${id}`, {
+        const {error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/projects/${id}`, {
           method: 'DELETE',
           headers: {
             'auth-token': token
@@ -166,7 +166,7 @@ export const showProject = () => {
         }  
         
       const updateProjectOnServer = async (id: string, updatedProject: Partial<Project>, token: string): Promise<Project> => {
-        const {data, error} = await useFetch(`http://localhost:4000/api/projects/${id}`, {
+        const {data, error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/projects/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

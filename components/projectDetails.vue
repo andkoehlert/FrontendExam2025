@@ -22,6 +22,48 @@
             </li>
           </ul>
         </div>
+      
+         <div class="my-7">
+          <!--Products-->
+  <h3 class="font-bold text-xl mb-2">Products:</h3>
+  <ul>
+ <li v-for="product in project.products" :key="product.productId._id">
+      <p class="font-bold border-b-2 mb-4 pb-2">Name:
+          <span class="font-normal">
+          {{ product.productId.name }}
+          </span></p>
+           <p class="font-bold border-b-2 mb-4 pb-2">Quantity:
+          <span class="font-normal">
+          {{  product.quantity}}
+          </span></p>
+    <p class="font-bold border-b-2 mb-4 pb-2">Unit Price:
+          <span class="font-normal">
+          {{  product.productId.price}}
+          </span></p>
+            <p class="font-bold border-b-2 mb-4 pb-2">Subtotal: 
+          <span class="font-normal">
+          {{   product.quantity * product.productId.price}}
+          </span></p>
+</li>
+
+  </ul>
+    <div class="my-7">
+        <h3 class="font-bold text-xl mb-2">Total:</h3>
+
+          <p class="font-bold border-b-2 mb-4 pb-2">Price:
+          <span class="font-normal">
+          {{ project.price }}
+          </span></p>
+
+             <p class="font-bold border-b-2 mb-4 pb-2">Total Price:
+          <span class="font-normal">
+          {{ project.totalPrice }}
+          </span></p>
+          </div>
+</div>
+       
+       
+       
       </div>
       
       <div class="grid grid-cols-1 shadow-lg shadow-dark-400/100 p-4 ">
@@ -38,15 +80,7 @@
         <h3 class=" font-bold text-xl my-7"> Project description: <span class="font-normal">{{ project.description }}</span></h3>
      
 
-        <!-- Displaying Products -->
-        <div class="my-7">
-          <h3 class="font-bold text-xl">Products:</h3>
-          <ul>
-            <li v-for="product in project.products" :key="product.productId">
-              {{ }} - Quantity: {{ product.quantity }}
-            </li>
-          </ul>
-        </div>
+ 
       </div>
     </div>
   </div>

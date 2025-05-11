@@ -102,4 +102,10 @@ const editorComponent = ref<{ editor: { getJSON: () => JSONContent } } | null>(n
   border-radius: 0.5rem;
   border: solid;
 }
+
+.input {
+  border: solid 0.5px #a7a7a7;
+  padding: 0.5rem;
+  margin-right: 1rem;
+}
 </style>

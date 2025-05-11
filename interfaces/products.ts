@@ -12,6 +12,7 @@ export type Product = {
   supplier: string;
   orderDate?: string;
   arrivalDate?: string;
+  price: number;
   _createdBy: User['id'];
 }
 
