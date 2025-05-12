@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import projectStatusChart from '~/components/projectStatusChart.vue'
-import projectLocationChart from '~/components/projectLocationChart.vue'
+import projectStatusChart from '../../components/Charts/projectStatusChart.vue'
+import projectLocationChart from '../../components/Charts/projectLocationChart.vue'
+import projectDelayedChart from '../../components/Charts/projectDelayedChart.vue'
 
 interface Project {
   status: string
@@ -34,17 +35,25 @@ onMounted(async () => {
       <div v-if="isLoading">Loading...</div>
       <div v-else-if="error" class="text-red-500">Error: {{ error }}</div>
       <div v-else>
-        <ProjectStatusChart :projects="projects" />
+        <projectStatusChart :projects="projects" />
       </div>
     </UCard>
 
     <UCard class="col-span-1">
-      <h2 class="text-xl mb-4">Completed projects by month</h2>
+      <h2 class="text-xl mb-4">Projects by month</h2>
       <div v-if="isLoading">Loading...</div>
       <div v-else-if="error" class="text-red-500">Error: {{ error }}</div>
       <div v-else>
         <projectLocationChart :projects="projects" />
       </div>
+          <UCard class="col-span-1">
+      <h2 class="text-xl mb-4">Completed projects by month</h2>
+      <div v-if="isLoading">Loading...</div>
+      <div v-else-if="error" class="text-red-500">Error: {{ error }}</div>
+      <div v-else>
+        <projectDelayedChart :projects="projects" />
+      </div>
+    </UCard>
     </UCard>
   </div>
 </template>

@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Project } from '~/interfaces/projects';
+import type { Project } from '../../interfaces/projects';
 
 
 const props = defineProps<{

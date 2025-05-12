@@ -52,7 +52,7 @@ import { computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { showPost } from '../../../composables/editor'
 import type { Post } from '~/interfaces/post'
-import TiptapEditor from '../../../components/editor.vue' 
+import TiptapEditor from '../../../components/editor/editor.vue' 
 
 const { posts, updatePost, fetchPostById } = showPost()
 const route = useRoute()

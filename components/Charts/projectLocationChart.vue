@@ -24,7 +24,7 @@ const chartData = computed(() => {
 })
 
 const categories = {
-  projectCount: { name: 'Completed Projects' }
+  projectCount: { name: 'Projects Date' }
 }
 
 const chartOptions = {

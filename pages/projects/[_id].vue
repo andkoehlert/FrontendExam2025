@@ -22,8 +22,8 @@ definePageMeta({
 })
 
 import { ref, onMounted } from 'vue';
-import { showProject } from '~/composables/UseProjects';  // Import your composable
-import type { Project } from '~/interfaces/projects';
+import { showProject } from '~/composables/UseProjects';  
+import type { Project } from '../../interfaces/projects';
 
 const { projects, error, loading, fetchProjects } = showProject();
 

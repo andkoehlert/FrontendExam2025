@@ -27,23 +27,32 @@
           <!--Products-->
   <h3 class="font-bold text-xl mb-2">Products:</h3>
   <ul>
- <li v-for="product in project.products" :key="product.productId._id">
-      <p class="font-bold border-b-2 mb-4 pb-2">Name:
-          <span class="font-normal">
-          {{ product.productId.name }}
-          </span></p>
-           <p class="font-bold border-b-2 mb-4 pb-2">Quantity:
-          <span class="font-normal">
-          {{  product.quantity}}
-          </span></p>
+<li v-for="product in project.products" :key="product.productId?._id || Math.random()">
+  <div v-if="product.productId">
+    <p class="font-bold border-b-2 mb-4 pb-2">Name:
+      <span class="font-normal">
+        {{ product.productId.name }}
+      </span>
+    </p>
+    <p class="font-bold border-b-2 mb-4 pb-2">Quantity:
+      <span class="font-normal">
+        {{ product.quantity }}
+      </span>
+    </p>
     <p class="font-bold border-b-2 mb-4 pb-2">Unit Price:
-          <span class="font-normal">
-          {{  product.productId.price}}
-          </span></p>
-            <p class="font-bold border-b-2 mb-4 pb-2">Subtotal: 
-          <span class="font-normal">
-          {{   product.quantity * product.productId.price}}
-          </span></p>
+      <span class="font-normal">
+        {{ product.productId.price }}
+      </span>
+    </p>
+    <p class="font-bold border-b-2 mb-4 pb-2">Subtotal: 
+      <span class="font-normal">
+        {{ product.quantity * product.productId.price }}
+      </span>
+    </p>
+  </div>
+  <div v-else class="text-red-500 italic">
+    Product reference missing (may have been deleted).
+  </div>
 </li>
 
   </ul>
@@ -87,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Project } from '~/interfaces/projects';
+import type { Project } from '../../interfaces/projects';
 
 const props = defineProps<{
   project: Project,

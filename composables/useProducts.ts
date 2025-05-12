@@ -72,6 +72,7 @@ export const showProduct = () => {
       supplier: product.supplier || 'Unknown', 
       orderDate: product.orderDate || Date,
       arrivalDate: product.arrivalDate || Date,
+      price: product.price || 0,
       _createdBy: userId
     }
   }

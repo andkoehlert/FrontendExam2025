@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Editor from '../../components/editor.vue'
+import Editor from '../../components/editor/editor.vue'
  
 import type { JSONContent } from '@tiptap/vue-3'
 import { onMounted } from 'vue';
