@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue'
 import projectStatusChart from '../../components/Charts/projectStatusChart.vue'
 import projectLocationChart from '../../components/Charts/projectLocationChart.vue'
 import projectDelayedChart from '../../components/Charts/projectDelayedChart.vue'
+import projectPriceRangeChart from '../../components/Charts/projectPriceRangeChart.vue'
+import projectEmployeePriceChart from '../../components/Charts/projectEmployeePriceChart.vue'
 
 interface Project {
   status: string
@@ -46,15 +48,34 @@ onMounted(async () => {
       <div v-else>
         <projectLocationChart :projects="projects" />
       </div>
+</UCard>
           <UCard class="col-span-1">
-      <h2 class="text-xl mb-4">Completed projects by month</h2>
+      <h2 class="text-xl mb-4">Total Price over time</h2>
       <div v-if="isLoading">Loading...</div>
       <div v-else-if="error" class="text-red-500">Error: {{ error }}</div>
       <div v-else>
         <projectDelayedChart :projects="projects" />
       </div>
     </UCard>
-    </UCard>
+
+    <UCard class="col-span-1">
+  <h2 class="text-xl mb-4">Projects by Price Range</h2>
+  <div v-if="isLoading">Loading...</div>
+  <div v-else-if="error" class="text-red-500">Error: {{ error }}</div>
+  <div v-else>
+    <projectPriceRangeChart :projects="projects" />
+  </div>
+</UCard>
+
+    <UCard class="col-span-1">
+  <h2 class="text-xl mb-4">Price vs Number of Employees</h2>
+  <div v-if="isLoading">Loading...</div>
+  <div v-else-if="error" class="text-red-500">Error: {{ error }}</div>
+  <div v-else>
+    <projectEmployeePriceChart :projects="projects" />
+  </div>
+</UCard>
+
   </div>
 </template>
 

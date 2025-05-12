@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Employee } from '../interfaces/employees';
+import type { Employee } from '../../interfaces/employees';
 
 
 const props = defineProps<{

@@ -207,7 +207,7 @@ const newProject = ref({
   price: '',
   totalPrice: '',
   status: '',
-  contract: 'not-started',
+  contract: 'not-signed',
   _createdBy: '',
   products: [] as Array<{ productId: string; quantity: number }>,
   employees: [] as Array<{ employeeId: string}>
@@ -286,7 +286,7 @@ if (newProject.value.products.length === 0) {
       status: '',
       price: '',
       totalPrice: '',
-      contract: 'not-started',
+      contract: '',
       _createdBy: '',
       products: [],
       employees: [],

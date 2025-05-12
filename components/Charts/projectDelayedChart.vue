@@ -2,54 +2,36 @@
 import { computed, defineProps } from 'vue'
 
 const props = defineProps<{
-  projects: Array<{ startDate: string }>
+  projects: Array<{ startDate: string; totalPrice: number }>
 }>()
 
-const chartData = computed(() => {
-  const counts: Record<string, number> = {}
+// Sort and prepare data
+const priceChartData = computed(() => {
+  const sorted = [...props.projects].sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
 
-  for (const project of props.projects) {
-    const date = new Date(project.startDate)
-    const label = date.toLocaleString('default', {
-      year: 'numeric',
-      month: 'long',
-    }) // e.g., "May 2025"
-
-    counts[label] = (counts[label] || 0) + 1
-  }
-
-  return Object.entries(counts)
-    .map(([month, projectCount]) => ({ month, projectCount }))
-    .sort((a, b) => new Date(a.month).getTime() - new Date(b.month).getTime())
+  return sorted.map((project) => ({
+    date: new Date(project.startDate).toLocaleDateString(),
+    totalPrice: project.totalPrice
+  }))
 })
 
 const categories = {
-  projectCount: { name: 'Delayed Projects' }
-}
-
-const chartOptions = {
-  colors: ['#00DC82'], 
+  totalPrice: { name: 'Total Price (DKK)' }
 }
 
 const xFormatter = (i: number): string => {
-  return chartData.value[i]?.month || ''
+  return priceChartData.value[i]?.date || ''
 }
 </script>
 
 <template>
-  <BarChart
-    :data="chartData"
+  <LineChart
+    :data="priceChartData"
     :height="300"
     :categories="categories"
-    :y-axis="['projectCount']"
+    :y-axis="['totalPrice']"
     :x-formatter="xFormatter"
+    :options="{ colors: ['#3B82F6'] }"
     :legend-position="LegendPosition.Top"
-    :options="chartOptions"
   />
 </template>
-
-<style>
-.css-6l77fg-bar {
-  fill: #00DC82 !important;
-}
-</style>

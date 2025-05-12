@@ -57,7 +57,6 @@
     </NuxtLink>
   </div>
 </li>
-          <li><NuxtLink to="/products" class="py-2 px-4">Products</NuxtLink></li>
           <li v-if="!isLoggedIn">
   <NuxtLink to="/auth/login" class="py-2 px-4">Login</NuxtLink>
 </li>
