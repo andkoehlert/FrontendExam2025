@@ -8,6 +8,7 @@
         <h2 class="text-4x1 my-7"></h2>
         <p class="text-xl my-7"></p>
         <h3 class="font-bold border-b-2 mb-4 pb-2">Login for admin</h3>
+        <p class="text-gray-800 mb-2">Please be patient. It can take some time for the server to login.</p>
         
         <input type="text" class="m-2 p-2 border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" 
         placeholder="Email" 

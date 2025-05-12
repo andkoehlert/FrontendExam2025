@@ -31,39 +31,48 @@
         </div>
         <input type="number" v-model="newProject.price" placeholder="Price" class="p-2 border rounded" required />
         
+<!-- Product Selection Section -->
+<div class="col-span-2 border p-4 rounded-lg">
+  <h3 class="text-lg font-semibold mb-4">Select Products</h3>
 
-        <!-- Product Selection Section -->
-        <div class="col-span-2 border p-4 rounded-lg">
-          <h3 class="text-lg font-semibold mb-4">Select Products</h3>
-          
-          <div v-if="productsLoading" class="text-center">Loading products...</div>
-          <div v-else-if="productsError" class="text-red-500 text-center">{{ productsError }}</div>
-          <div v-else class="space-y-3">
-            <div v-for="product in availableProducts" :key="product._id" class="flex items-center gap-4 p-2 hover:bg-gray-50 rounded">
-              <input
-                type="checkbox"
-                :id="`product-${product._id}`"
-                :value="product._id"
-                v-model="selectedProductIds"
-                class="h-5 w-5"
-              >
-              <label :for="`product-${product._id}`" class="flex-1">
-                <span class="font-medium">{{ product.name }}</span>
-                <span class="text-sm text-gray-500 ml-2">(Stock: {{ product.stock }})</span>
-              </label>
-              <input
-                v-if="selectedProductIds.includes(product._id)"
-                type="number"
-                v-model.number="productQuantities[product._id]"
-                :max="product.stock"
-                min="1"
-                class="w-20 p-1 border rounded"
-                placeholder="Qty"
-                @change="validateQuantity(product._id)"
-              >
-            </div>
-          </div>
-        </div>
+  <div v-if="productsLoading" class="text-center">Loading products...</div>
+  <div v-else-if="productsError" class="text-red-500 text-center">{{ productsError }}</div>
+  <div v-else class="space-y-4">
+    
+    <div class="flex items-center gap-4">
+      <select v-model="newProductSelection.productId" class="p-2 border rounded w-full">
+        <option value="">Select Product</option>
+        <option v-for="product in availableProducts" :key="product._id" :value="product._id">
+          {{ product.name }} (Stock: {{ product.stock }})
+        </option>
+      </select>
+
+      <input
+        type="number"
+        v-model.number="newProductSelection.quantity"
+        min="1"
+        placeholder="Qty"
+        class="w-20 p-2 border rounded"
+      />
+
+      <button type="button" @click="addProductToProject" class="bg-gray-200 p-2 rounded hover:bg-gray-300">
+        Add Product
+      </button>
+    </div>
+
+    <!-- Show added products -->
+    <ul class="space-y-1 text-sm text-gray-700 mt-4">
+      <li v-for="(prod, index) in newProject.products" :key="index" class="flex justify-between">
+        <span>
+          {{ getProductName(prod.productId) }} — Qty: {{ prod.quantity }}
+        </span>
+        <button type="button" class="text-red-500 hover:underline" @click="removeProduct(index)">
+          Remove
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
 
         <!-- Employee Selection Section -->
 <div class="col-span-2 border p-4 rounded-lg">
@@ -156,6 +165,38 @@ const {
 const selectedProductIds = ref<string[]>([]);
 const productQuantities = ref<Record<string, number>>({});
 const selectedEmployeeIds = ref<string[]>([]);
+
+const newProductSelection = ref({ productId: '', quantity: 1 });
+
+const addProductToProject = () => {
+  const { productId, quantity } = newProductSelection.value;
+
+  if (!productId || quantity < 1) return;
+  const product = availableProducts.value.find(p => p._id === productId);
+  
+  if (!product) {
+    alert('Selected product not found.');
+    return;
+  }
+
+  if (quantity > product.stock) {
+    alert(`Not enough stock for ${product.name}. Only ${product.stock} left.`);
+    return;
+  }
+
+  newProject.value.products.push({ productId, quantity });
+  newProductSelection.value = { productId: '', quantity: 1 };
+};
+
+const removeProduct = (index: number) => {
+  newProject.value.products.splice(index, 1);
+};
+
+const getProductName = (productId: string) => {
+  const product = availableProducts.value.find(p => p._id === productId);
+  return product ? product.name : 'Unknown';
+};
+
 // Project form data
 const newProject = ref({
   name: '',
@@ -196,22 +237,26 @@ const validateQuantity = (productId: string) => {
 const addProjectHandler = async () => {
   const { userId } = getTokenAndUserId();
   
-  if (selectedProductIds.value.length === 0 ) {
-    alert("Please select at least one product.")
-    return;
-  }
+if (newProject.value.products.length === 0) {
+  alert("Please add at least one product.");
+  return;
+}
 
   if (selectedEmployeeIds.value.length === 0 ) {
     alert("Please select at least one employee.")
     return;
   }
 
+  if (newProject.value.products.length === 0) {
+  alert("Please add at least one product.");
+  return;
+}
   // Prepare products array from selections
-  newProject.value.products = selectedProductIds.value.map(productId => ({
+/*   newProject.value.products = selectedProductIds.value.map(productId => ({
     productId,
     quantity: productQuantities.value[productId] || 1
   }));
-
+ */
   newProject.value.employees = selectedEmployeeIds.value.map(id => ({employeeId: id}));
 
 

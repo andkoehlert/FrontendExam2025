@@ -8,25 +8,29 @@
       <form @submit.prevent="addProductHandler" class="grid grid-cols-2 gap-10">
         
         <input type="text" v-model="newProduct.name" placeholder="Name" class="p-2 border rounded" required  />
-        <input type="text" v-model="newProduct.description"  placeholder="Description" class="p-2 border rounded" /> <!-- Product description -->
-        <input type="text" v-model="newProduct.category"  placeholder="Category" class="p-2 border rounded" /> <!-- Product description -->
-        <input type="text" v-model="newProduct.supplier"  placeholder="supplier" class="p-2 border rounded" /> <!-- Product description -->
-        <input type="date" v-model="newProduct.orderDate"  placeholder="orderDate" class="p-2 border rounded" /> <!-- Product description -->
-        <input type="date" v-model="newProduct.arrivalDate"  placeholder="arrivalDate" class="p-2 border rounded" /> <!-- Product description -->
-        <input type="text"  v-model="newProduct.imageURL" placeholder="Image URL" class="p-2 border rounded h-10" /> <!-- Image URL -->
+        <input type="text" v-model="newProduct.description"  placeholder="Description" class="p-2 border rounded" /> 
+        <input type="text" v-model="newProduct.category"  placeholder="Category" class="p-2 border rounded" /> 
+        <input type="text" v-model="newProduct.supplier"  placeholder="supplier" class="p-2 border rounded" /> 
+        <input type="date" v-model="newProduct.orderDate"  placeholder="orderDate" class="p-2 border rounded" /> 
+        <input type="date" v-model="newProduct.arrivalDate"  placeholder="arrivalDate" class="p-2 border rounded" /> 
+        <input type="text"  v-model="newProduct.imageURL" placeholder="Image URL" class="p-2 border rounded h-10" /> 
    
         <div class="p-2 border rounded">
         <span class="uppercase font-bold">Product Stock: </span>
-        <input type="number" v-model="newProduct.stock"  placeholder="Stock" class=" pl-2 " />  <!-- Product stock -->
+        <input type="number" v-model="newProduct.stock"  placeholder="Stock" class=" pl-2 " /> 
         </div>
 
         <div class="p-2 border rounded">
         <span class="uppercase font-bold">Product quantity: </span>
-        <input type="number" v-model="newProduct.quantity"  placeholder="quantity" class=" pl-2 " />  <!-- Product stock -->
+        <input type="number" v-model="newProduct.quantity"  placeholder="quantity" class=" pl-2 " />  
         </div>
         <div class="p-2 border rounded col-span-2">
   <input type="file" @change="handlePhotoUpload" />
 </div>
+         <div class="p-2 border rounded">
+        <span class="uppercase font-bold">Price</span>
+        <input type="number" v-model="newProduct.price"  placeholder="price" class=" pl-2 " />  
+        </div>
         <button type="submit" class="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700 col-span-2">
         Create
         </button>
@@ -85,6 +89,7 @@ const addProductHandler = async () => {
       supplier: '',
       orderDate: '',
       arrivalDate: '',
+      price: 0,
       _createdBy: ''
     };
   } catch (err) {
@@ -128,6 +133,7 @@ const newProduct = ref({
       supplier: '',
       orderDate: '',
       arrivalDate: '',
+      price: 0,
       _createdBy: ''
 })
 
