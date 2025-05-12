@@ -37,6 +37,10 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  middleware: 'auth'
+})
 import { ref } from 'vue'
 import Editor from '../../components/editor/editor.vue'
  
