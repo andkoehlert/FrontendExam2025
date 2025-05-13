@@ -1,25 +1,31 @@
+import {jwtDecode}  from 'jwt-decode'
+
+interface DecodedToken {
+  exp: number; // JWT expiration timestamp (in seconds)
+}
+
 export const useAuthState = () => {
-  
-  // using useState to create a global state and saving the data in IsloggedIn 
   const isLoggedIn = useState<boolean>('isLoggedIn', () => {
     try {
-      // 
-      return localStorage.getItem('isLoggedIn') === 'true';
+      const token = localStorage.getItem('auth-token');
+      if (!token) return false;
 
+      const decoded = jwtDecode<DecodedToken>(token);
+      const isExpired = decoded.exp * 1000 < Date.now();
+
+      return !isExpired;
     } catch {
       return false;
-
     }
   });
 
   watch(isLoggedIn, (newValue) => {
     try {
-      localStorage.setItem('isLoggedIn', String(newValue))
+      localStorage.setItem('isLoggedIn', String(newValue));
     } catch {
-      console.log("Couldn't save login status in localStorage")
+      console.log("Couldn't save login status in localStorage");
     }
   });
-    
- 
+
   return isLoggedIn;
-}
+};

@@ -24,9 +24,14 @@
         <span class="uppercase font-bold">Product quantity: </span>
         <input type="number" v-model="newProduct.quantity"  placeholder="quantity" class=" pl-2 " />  
         </div>
-        <div class="p-2 border rounded col-span-2">
-  <input type="file" @change="handlePhotoUpload" />
-</div>
+   <!-- Image Preview -->
+      <div class="p-2 border rounded col-span-2">
+        <input type="file" @change="handlePhotoUpload" />
+        <div v-if="previewUrl" class="mt-2">
+          <img :src="previewUrl" alt="Image Preview" class="w-32 h-32 object-cover rounded" />
+        </div>
+      </div>
+
          <div class="p-2 border rounded">
         <span class="uppercase font-bold">Price</span>
         <input type="number" v-model="newProduct.price"  placeholder="price" class=" pl-2 " />  
@@ -62,7 +67,9 @@ import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProduct } from '../../composables/useProducts';
 import type { Product } from '~/interfaces/products';
+import { useImageUploadForCreate } from '../../composables/useImageUploadForCreate'; 
 const {products, error, loading, updateProduct, fetchProducts, addProduct, getTokenAndUserId, deleteProduct} = showProduct();
+const { uploadImage, previewUrl } = useImageUploadForCreate();  // Destructure the image uploader composable
 
 onMounted(() => {
   fetchProducts();
@@ -98,30 +105,17 @@ const addProductHandler = async () => {
 }
 
 const handlePhotoUpload = async (event: Event) => {
-
-  // Tell TS it's a input element
   const photoInput = event.target as HTMLInputElement;
   if (!photoInput.files || photoInput.files.length === 0) return;
 
-
   const file = photoInput.files[0];
-  const formData = new FormData();
-  formData.append('image', file);
+  const imageUrl = await uploadImage(file);
 
-  try {
-    const res = await fetch('http://localhost:4000/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await res.json();
-    console.log('Uploaded image:', data);
-
-    newProduct.value.imageURL = data.url; 
-  } catch (err) {
-    console.error('Image upload failed:', err);
+  if (imageUrl) {
+    newProduct.value.imageURL = imageUrl;  // Store the URL of the uploaded image
   }
 };
+
 
 const newProduct = ref({
       name: '',

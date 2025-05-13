@@ -17,7 +17,7 @@ const error = ref<string | null>(null)
 
 onMounted(async () => {
   try {
-    const res = await fetch('http://localhost:4000/api/projects')
+    const res = await fetch('https://fullstackexam2025backend.onrender.com/api/projects')
     if (!res.ok) throw new Error('Failed to fetch projects')
     projects.value = await res.json()
   } catch (err) {

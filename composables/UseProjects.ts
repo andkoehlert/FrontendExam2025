@@ -185,13 +185,12 @@ export const showProject = () => {
               return data.value as Project
         }
 
-        const updateProjectInState = (id: string, updatedProject: Project) => {
-          const index = projects.value.findIndex(projects => projects._id === id)
-          if (index !== -1 ) {
-            productsVue.value[index] = updatedProject
-          }
-        }
-
+  const updateProjectInState = (id: string, updatedProject: Project) => {
+  const index = projects.value.findIndex(project => project._id === id);
+  if (index !== -1) {
+    projects.value[index] = updatedProject; // This was the main issue
+  }
+};
         const updateProject = async(id: string, updatedProject: Partial<Project> ):Promise<void> => {
          try {
           const {token} = getTokenAndUserId()

@@ -14,7 +14,19 @@
         <input type="text" v-model="product.supplier" placeholder="Supplier" class="p-2 border rounded" />
         <input type="date" v-model="product.orderDate" placeholder="Order Date" class="p-2 border rounded" />
         <input type="date" v-model="product.arrivalDate" placeholder="Arrival Date" class="p-2 border rounded" />
-        <input type="text" v-model="product.imageURL" placeholder="Image URL" class="p-2 border rounded h-10" />
+        <div class="p-2 border rounded col-span-2">
+  <input type="file" @change="handlePhotoUpload" />
+</div>
+
+<div class="col-span-2">
+  <p>Current image preview:</p>
+  <img 
+    v-if="product.imageURL" 
+    :src="product.imageURL" 
+    alt="Product Image" 
+    class="w-32 h-32 object-cover rounded border"
+  />
+</div>
 
         <div class="p-2 border rounded">
         <span class="uppercase font-bold">Product Stock: </span>
@@ -66,8 +78,10 @@ import {ref} from 'vue';
 import { onMounted } from 'vue';
 import { showProduct } from '../../../composables/useProducts';
 import type { Product } from '~/interfaces/products';
+import { useImageUploadForCreate } from '../../../composables/useImageUploadForCreate';
 
 const { products, updateProduct, fetchProducts} = showProduct();
+const { uploadImage } = useImageUploadForCreate(ref(null));
 
 // to get the id from the url
 const route = useRoute();
@@ -93,6 +107,16 @@ onMounted(() => {
   getSpecificProduct();
 });
 
+const handlePhotoUpload = async (event: Event) => {
+  const photoInput = event.target as HTMLInputElement;
+  if (photoInput.files && photoInput.files[0]) {
+    const file = photoInput.files[0];
+    const imageUrl = await uploadImage(file);  
+    if (imageUrl && product.value) { 
+      product.value.imageURL = imageUrl;
+    }
+  }
+};
 
 const updateProductHandler = async () => {
   if (!product.value) return;

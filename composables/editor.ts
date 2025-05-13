@@ -14,7 +14,7 @@ export const showPost = () => {
     loading.value = true;
   
     try {
-      const {data, error: fetchError, execute} = await useLazyFetch<Post[]>('http://localhost:4000/api/posts', {
+      const {data, error: fetchError, execute} = await useLazyFetch<Post[]>('https://fullstackexam2025backend.onrender.com/api/posts', {
         method: 'GET',
         immediate: false, 
       });
@@ -38,7 +38,7 @@ export const showPost = () => {
 const fetchPostById = async (id: string): Promise<Post | null> => {
   loading.value = true;
   try {
-    const { data, error: fetchError } = await useFetch<Post | Post[]>(`http://localhost:4000/api/posts/${id}`, {
+    const { data, error: fetchError } = await useFetch<Post | Post[]>(`https://fullstackexam2025backend.onrender.com/api/posts/${id}`, {
       method: 'GET',
       watch: false
     });
@@ -108,7 +108,7 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
       console.log("Sending post data:", postDefaults); // Log the data
 
 
-      const {data, error, execute} = await useLazyFetch<Post>('http://localhost:4000/api/post', {
+      const {data, error, execute} = await useLazyFetch<Post>('https://fullstackexam2025backend.onrender.com/api/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
 
 
     const deletePostFromServer = async (id: string, token: string): Promise<void> => {
-      const {error} = await useFetch(`http://localhost:4000/api/post/${id}`, {
+      const {error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/post/${id}`, {
         method: 'DELETE',
         headers: {
           'auth-token': token
@@ -170,7 +170,7 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
     }
 
     const updatePostOnServer = async (id: string, updatedPost: Partial<Post>, token: string): Promise<Post> => {
-      const {data, error} = await useFetch(`http://localhost:4000/api/posts/${id}`, {
+      const {data, error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/posts/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

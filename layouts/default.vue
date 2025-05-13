@@ -55,6 +55,12 @@
     >
       Create Employee
     </NuxtLink>
+     <NuxtLink
+      to="/auth/adminRegister"
+      class="block px-4 py-2 hover:bg-gray-100"
+    >
+      Create admin User
+    </NuxtLink>
   </div>
 </li>
           <li v-if="!isLoggedIn">
