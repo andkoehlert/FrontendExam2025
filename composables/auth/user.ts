@@ -99,7 +99,7 @@ const logout = () => {
 
 const registerUser = async (name: string, email: string, password: string): Promise<void> => {
   try {
-    const { data, error } = await useFetch<AuthResponse>('https://fullstackexam2025backend.onrender.com/api/user/register', {
+    const { data, error: fetchError } = await useFetch<AuthResponse>('https://fullstackexam2025backend.onrender.com/api/user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -107,8 +107,9 @@ const registerUser = async (name: string, email: string, password: string): Prom
       body: { name, email, password }, // Ingen stringify nødvendig
     })
 
-    if (error.value) {
-      throw new Error(error.value.message || 'Invalid email or password')
+   if (fetchError.value) {
+      const backendError = (fetchError.value as any).data?.error || 'Registration failed';
+      throw new Error(backendError);
     }
 
     // Hvis det lykkes, sæt værdier
@@ -122,8 +123,9 @@ const registerUser = async (name: string, email: string, password: string): Prom
     console.log('User created:', data.value)
 
   } catch (err) {
-    error.value = (err as Error).message || 'An error occurred'
-    isLoggedIn.value = false
+    const msg = (err as Error).message || 'An error occurred';
+    error.value = msg;
+    alert(msg); 
   }
 }
 

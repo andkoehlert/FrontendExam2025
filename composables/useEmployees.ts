@@ -188,8 +188,51 @@ export const showEmployee = () => {
             error.value = (err as Error).message
         }
       }
+const assignEmployeeToProject = async (projectId: string, employeeId: string): Promise<void> => {
+  const { token } = getTokenAndUserId();
+  
+  try {
+    const { error } = await useFetch(`https://fullstackexam2025backend.onrender.com/api/projects/${projectId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': token
+      },
+      body: { employeeId },
+    });
+
+    if (error.value) {
+      throw new Error(error.value.message || 'Failed to assign employee');
+    }
+    // No return needed since we're using Promise<void>
+  } catch (err) {
+    console.error('Error assigning employee:', err);
+    throw err;
+  }
+};
+
+const removeEmployeeFromProject = async (projectId: string, employeeId: string): Promise<void> => {
+  const { token } = getTokenAndUserId();
+  
+  try {
+    const { error } = await useFetch(`https://fullstackexam2025backend.onrender.com/api/projects/${projectId}/employees/${employeeId}`, {
+      method: 'DELETE',
+      headers: {
+        'auth-token': token
+      },
+    });
+
+    if (error.value) {
+      throw new Error(error.value.message || 'Failed to remove employee');
+    }
+  } catch (err) {
+    console.error('Error removing employee:', err);
+    throw err;
+  }
+};
 
 
-  return {employees, error, loading, updateEmployee, showEmployee, deleteEmployee, fetchEmployees, addEmployee, getTokenAndUserId, }
+  return {employees, error, loading, updateEmployee, assignEmployeeToProject,
+  removeEmployeeFromProject, showEmployee, deleteEmployee, fetchEmployees, addEmployee, getTokenAndUserId, }
 
 }

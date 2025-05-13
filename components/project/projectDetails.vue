@@ -12,16 +12,22 @@
           <span class="font-normal">
           {{ project.status }}
           </span></h3>
-       
-           <!-- Displaying Employees -->
-           <div class="my-7">
-          <h3 class="font-bold text-xl">Employees:</h3>
-          <ul>
-            <li v-for="employee in project.employees" :key="employee.employeeId._id">
-              {{ employee.employeeId.name }} - {{ employee.employeeId.position }}
-            </li>
-          </ul>
-        </div>
+   <!-- Displaying Employees -->
+<div class="my-7">
+  <h3 class="font-bold text-xl">Employees:</h3>
+  <ul>
+    <li v-for="employee in project.employees" :key="employee.employeeId?._id">
+      <!-- Check if employeeId exists and is not null -->
+      <div v-if="employee.employeeId && employee.employeeId.name">
+        {{ employee.employeeId.name }} - {{ employee.employeeId.position }}
+      </div>
+      <div v-else class="text-red-500 italic">
+       <p>Employee reference missing (may have been deleted).</p> 
+      
+      </div>
+    </li>
+  </ul>
+</div>
       
          <div class="my-7">
           <!--Products-->

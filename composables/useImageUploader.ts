@@ -18,9 +18,11 @@ export function useImageUploader(editor: any) {
       const formData = new FormData();
       formData.append('image', file);
 
-      const response = await $fetch<UploadResponse>('http://localhost:4000/api/upload', {
+      const response = await $fetch<UploadResponse>('https://fullstackexam2025backend.onrender.com/api/upload', {
         method: 'POST',
         body: formData,
+          credentials: 'include',  // Add this line to send cookies
+
       });
 
       editor.value.chain().focus()
