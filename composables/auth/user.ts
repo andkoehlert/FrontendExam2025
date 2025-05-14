@@ -78,8 +78,8 @@ try {
 
   localStorage.setItem('lsToken', authToken)
   localStorage.setItem('userIDToken', userId)
-  console.log('user is logged in:', authResponse)
-  console.log('token:', token.value)
+ // console.log('user is logged in:', authResponse)
+ // console.log('token:', token.value)
 
   isLoggedIn.value = true;
 
@@ -93,7 +93,6 @@ const logout = () => {
   user.value = null 
   isLoggedIn.value = false
   localStorage.removeItem('lsToken')
-  console.log("user is logged out")
 }
 
 
@@ -120,7 +119,7 @@ const registerUser = async (name: string, email: string, password: string): Prom
     localStorage.setItem('LsToken', token.value || '')
     localStorage.setItem('userIDToken', data.value?.data.userId || '')
 
-    console.log('User created:', data.value)
+   // console.log('User created:', data.value)
 
   } catch (err) {
     const msg = (err as Error).message || 'An error occurred';

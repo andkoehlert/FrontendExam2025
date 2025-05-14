@@ -19,7 +19,7 @@ const categories = {
 
 const xFormatter = (i: number): string => {
   const point = scatterData.value[i]
-  return `${point.employees} employees`
+  return `${point.employees} `
 }
 </script>
 

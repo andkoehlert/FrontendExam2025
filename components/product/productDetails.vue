@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <div class="grid grid-cols-2 gap-10 ">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 ">
       <div class="p-7 ">
         <img :src="product.imageURL" alt="product" class="mx-auto my-7 max-h-80">
       </div>
-      <div class="grid grid-cols-2 shadow-lg shadow-dark-400/100 p-4 ">
+      <div class="grid grid-cols-1 md:grid-cols-2 shadow-lg shadow-dark-400/100 p-4 ">
         <p class="font-bold border-b-2 mb-4 pb-2">Name:
           <span class="font-normal">
             {{ product.name  }}
@@ -35,12 +35,13 @@
             {{product.arrivalDate  }}
           </span>
         </p>
-            <p class="font-bold border-b-2 mb-4 pb-2">Product description:
+            <p class="font-bold border-b-2 mb-4 pb-2">Description:
           <span class="font-normal">
             {{product.description  }}
           </span>
         </p>
-       
+            
+         
        
        
        
@@ -57,6 +58,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: 'default' 
+});
 import type { Product } from '~/interfaces/products';
 
 const props = defineProps<{

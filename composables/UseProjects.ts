@@ -122,12 +122,12 @@ export const showProject = () => {
           // push data.value
           if (data.value) {
             projects.value.push(data.value)
-            console.log("projects added", data.value)
+           // console.log("projects added", data.value)
           }
 
           // catch error
         } catch (err) {
-          console.error('Error adding project:', err)
+        //  console.error('Error adding project:', err)
           error.value = (err as Error).message
           throw err;
         }
@@ -149,7 +149,7 @@ export const showProject = () => {
 
         const removeProjectFromState = (id: string): void => {
           projects.value = projects.value.filter(project => project._id !== id)
-          console.log("Project deleted", id)
+         // console.log("Project deleted", id)
         }
 
         const deleteProject = async (id: string): Promise<void> => {

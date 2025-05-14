@@ -43,6 +43,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: 'auth'
+})
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { showEmployee } from '../../composables/useEmployees';
@@ -97,7 +100,7 @@ const addEmployeeHandler = async () => {
       _createdBy: ''
     };
   } catch (err) {
-    console.log('Error', err);
+   // console.log('Error', err);
   }
 };
 

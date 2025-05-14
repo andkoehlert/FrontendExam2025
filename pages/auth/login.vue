@@ -1,63 +1,122 @@
 <template>
   <div class="card">
-    <div class="grid grid-cols-2 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
       <div class="p-7">
         <img src="../../assets/images/login.jpeg" alt="product" class="mx-auto my-7">
       </div>
-      <div class=""p-7>
-        <h2 class="text-4x1 my-7"></h2>
-        <p class="text-xl my-7"></p>
+      <div class="p-7">
         <h3 class="font-bold border-b-2 mb-4 pb-2">Login for admin</h3>
         <p class="text-gray-800 mb-2">Please be patient. It can take some time for the server to login.</p>
         
-        <input type="text" class="m-2 p-2 border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" 
-        placeholder="Email" 
-        v-model="email" /> 
-      
-        <input type="password" class="m-2 p-2  border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" 
-        placeholder="Password" 
-        v-model="password"  /> 
-
-        <p class="mb-7"></p>
-        <div class="flex gap-4">
-        <button @click="fetchToken(email, password)" class="btn flex">
-          <i class="material-icons mr-2"><span class="material-symbols-outlined">login</span></i>
-          <span>Login</span>
-        </button>
-        <button @click="logout()" class="btn flex gap-2">
-          <i class="material-icons mr-2 order-2"><span class="material-symbols-outlined">logout</span></i>
-          <span>Logout</span>
-        </button>
+        <div v-if="message.text" 
+             :class="['mb-4 p-3 rounded', message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700']">
+          {{ message.text }}
+        </div>
         
-      </div>
-
-      <div class="">
-    <h2 class="pt-4">Dont have an account?</h2>
-
-<form class="flex flex-wrap">
-      <input type="text" class="m-2 p-2 border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" placeholder="Name" v-model="name" />   <!-- v-model for name -->
-      <input type="text" class="m-2 p-2 border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" placeholder="Email" v-model="email" /> <!-- v-model for email -->
-      <input type="password" class="m-2 p-2 border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" placeholder="Password" v-model="password"  /> <!-- v-model for password -->
-      <button class="bg-[#10B981] text-white p-2 rounded hover:bg-[#059669] w-full mt-4" @click.prevent="registerUser(name, email, password)" >Register</button> <!-- Register button -->
-    </form>
-  </div>
-   
-      </div>
+        <input type="email" 
+               class="m-2 p-2 border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" 
+               placeholder="Email" 
+               v-model="email" />
       
+        <input type="password" 
+               class="m-2 p-2 border-l hover:border-b focus:border-b border-blue-600 bg-transparent text-dark-300 focus:outline-none" 
+               placeholder="Password" 
+               v-model="password" />
+
+        <div class="flex gap-4 mt-4">
+          <button @click="handleLogin" 
+                  class="btn flex" 
+                  :disabled="isLoading">
+            <i class="material-icons mr-2"><span class="material-symbols-outlined">login</span></i>
+            <span>{{ isLoading ? 'Logging in...' : 'Login' }}</span>
+          </button>
+          <button @click="handleLogout" class="btn flex gap-2">
+            <i class="material-icons mr-2 order-2"><span class="material-symbols-outlined">logout</span></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
     </div>
-    
   </div>
-
 </template>
-
 <script setup>
 import { useUsers } from '../../composables/auth/user';
-import {ref} from 'vue'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
-const {fetchToken, registerUser, logout, name, email, password, user} = useUsers()
+const router = useRouter()
+const { fetchToken, logout, email, password, error } = useUsers()
 
+const isLoading = ref(false)
+const message = ref({
+  text: '',
+  type: '' 
+})
+
+watch(error, (newError) => {
+  if (newError) {
+    message.value = {
+      text: newError,
+      type: 'error'
+    }
+  }
+})
+
+const clearMessage = () => {
+  message.value = { text: '', type: '' }
+  if (error.value) error.value = null
+}
+
+const handleLogin = async () => {
+  clearMessage()
+  isLoading.value = true
+  
+  try {
+    await fetchToken(email.value, password.value)
+    
+    if (!error.value) {
+      message.value = {
+        text: 'Login successful! Redirecting...',
+        type: 'success'
+      }
+      setTimeout(() => router.push('/dashboard/dashboard'), 1500)
+    }
+  } catch (err) {
+    if (!error.value) {
+      message.value = {
+        text: 'Login failed. Please check your credentials.',
+        type: 'error'
+      }
+    }
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const handleLogout = async () => {
+  clearMessage()
+  try {
+    await logout()
+    message.value = {
+      text: 'Logged out successfully',
+      type: 'success'
+    }
+  } catch (err) {
+    message.value = {
+      text: 'Logout failed',
+      type: 'error'
+    }
+  }
+}
 </script>
 
 <style scoped>
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 
+[class*='bg-'] {
+  transition: all 0.3s ease;
+}
 </style>

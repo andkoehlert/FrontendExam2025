@@ -23,9 +23,9 @@ onMounted(() => {
   fetchProducts();
 });
 
-  definePageMeta({
-    layout: 'products'
-  })
+definePageMeta({
+  middleware: 'auth'
+})
 
   useHead({
     title: 'Products page',

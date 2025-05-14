@@ -14,8 +14,10 @@
         <!-- Navbar Links -->
         <ul :class="{'flex-col': isMenuOpen, 'hidden': !isMenuOpen, 'lg:flex': true, 'lg:flex-row': !isMenuOpen}" class="flex gap-10 items-center transition-all">
           <li><NuxtLink to="/" class="py-2 px-4">Home</NuxtLink></li>
-          <li><NuxtLink v-if="isLoggedIn" to="/dashboard/dashboard" class="py-2 px-4">Dashboard</NuxtLink></li>
           <li><NuxtLink to="/about" class="py-2 px-4">About</NuxtLink></li>
+          <li><NuxtLink v-if="isLoggedIn" to="/dashboard/dashboard" class="py-2 px-4">Dashboard</NuxtLink></li>
+          <li><NuxtLink v-if="isLoggedIn" to="/taskboard" class="py-2 px-4">Taskboard</NuxtLink></li>
+
         <li class="relative" v-if="isLoggedIn">
   <button
     @click="isDropdownOpen = !isDropdownOpen"
