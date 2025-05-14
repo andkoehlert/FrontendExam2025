@@ -55,6 +55,7 @@ export const useUsers = () => {
  // login logic
 const fetchToken = async (email: string, password: string): Promise<void> => {
 try {
+  
   const response = await fetch('https://fullstackexam2025backend.onrender.com/api/user/login', {
     method: 'POST',
     headers: {

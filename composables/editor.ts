@@ -14,8 +14,14 @@ export const showPost = () => {
     loading.value = true;
   
     try {
+      const {token} =  getTokenAndUserId()
+
       const {data, error: fetchError, execute} = await useLazyFetch<Post[]>('https://fullstackexam2025backend.onrender.com/api/posts', {
         method: 'GET',
+         headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
         immediate: false, 
       });
   

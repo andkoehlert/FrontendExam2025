@@ -12,9 +12,14 @@ export const showEmployee = () => {
     loading.value = true;
 
     try {
+                  const {token} =  getTokenAndUserId()
+
       const {data, error: fetchError, execute} = await useLazyFetch<Employee[]>('https://fullstackexam2025backend.onrender.com/api/employees', {
         method: 'GET',
-
+ headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
         immediate: false, 
       });
 

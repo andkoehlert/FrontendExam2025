@@ -15,8 +15,14 @@ export const showProject = () => {
     loading.value = true;
   
     try {
+      const {token} =  getTokenAndUserId()
+
       const {data, error: fetchError, execute} = await useLazyFetch<Project[]>('https://fullstackexam2025backend.onrender.com/api/projects', {
         method: 'GET',
+         headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
         // venter med at fetch til jeg selv klader den(execute)
         immediate: false, 
       });

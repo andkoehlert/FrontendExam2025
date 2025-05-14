@@ -14,8 +14,14 @@ export const showProduct = () => {
     loading.value = true;
   
     try {
-      const {data, error: fetchError, execute} = await useLazyFetch<Product[]>('https://fullstackexam2025backend.onrender.com/api/products', {
+            const {token} =  getTokenAndUserId()
+
+      const {data, error: fetchError, execute} = await useLazyFetch<Product[]>('https://fullstackexam2025backend.onrender.com/api/products/', {
         method: 'GET',
+         headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
         // venter med at fetch til jeg selv klader den(execute)
         immediate: false, 
       });
