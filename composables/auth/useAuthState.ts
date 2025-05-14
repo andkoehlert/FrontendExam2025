@@ -23,7 +23,7 @@ export const useAuthState = () => {
     try {
       localStorage.setItem('isLoggedIn', String(newValue));
     } catch {
-      console.log("Couldn't save login status in localStorage");
+     // console.log("Couldn't save login status in localStorage");
     }
   });
 

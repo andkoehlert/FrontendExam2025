@@ -45,7 +45,7 @@
   </div>
 <!--Existing products-->
   <div class="pt-10">
-    <div class="grid grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
       <div v-if="loading">Loading...</div>
       <div v-for="product in products" :key="product._id">
         <ProductCard 
@@ -62,6 +62,9 @@
 
 <script setup lang="ts">
 
+definePageMeta({
+  middleware: 'auth'
+})
 
 import {ref} from 'vue';
 import { onMounted } from 'vue';
@@ -100,7 +103,7 @@ const addProductHandler = async () => {
       _createdBy: ''
     };
   } catch (err) {
-    console.log('Error', err)
+  //  console.log('Error', err)
   }
 }
 

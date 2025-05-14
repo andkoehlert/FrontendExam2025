@@ -105,7 +105,7 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
       validatePost(post)
 
       const postDefaults = setDefaultValues(post, userId)
-      console.log("Sending post data:", postDefaults); // Log the data
+     // console.log("Sending post data:", postDefaults); // Log the data
 
 
       const {data, error, execute} = await useLazyFetch<Post>('https://fullstackexam2025backend.onrender.com/api/post', {
@@ -121,17 +121,17 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
     await execute()
 
       if (error.value) {
-        console.error("API Error:", error.value);
+       // console.error("API Error:", error.value);
         throw new Error(error.value.message || 'No data available')
       }
 
       if (data.value) {
         posts.value.push(data.value)
-        console.log("post added", data.value)
+       // console.log("post added", data.value)
       }
 
     } catch (err) {
-        console.error('Error adding post:', err)
+      //  console.error('Error adding post:', err)
         error.value = (err as Error).message
         throw err;
       }    
@@ -153,7 +153,7 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
 
     const removePostFromState = (id: string): void => {
       posts.value = posts.value.filter(post => post._id !== id)
-      console.log("post deleted", id)
+     // console.log("post deleted", id)
     }
 
     const deletePost = async (id: string): Promise<void> => {

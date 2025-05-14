@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth'
+})
 import { ref, onMounted } from 'vue'
 import projectStatusChart from '../../components/Charts/projectStatusChart.vue'
 import projectLocationChart from '../../components/Charts/projectLocationChart.vue'
@@ -49,7 +52,7 @@ onMounted(async () => {
         <projectLocationChart :projects="projects" />
       </div>
 </UCard>
-          <UCard class="col-span-1">
+          <UCard class="col-span-2">
       <h2 class="text-xl mb-4">Total Price over time</h2>
       <div v-if="isLoading">Loading...</div>
       <div v-else-if="error" class="text-red-500">Error: {{ error }}</div>

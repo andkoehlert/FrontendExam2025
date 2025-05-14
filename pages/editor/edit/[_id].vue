@@ -48,6 +48,10 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  middleware: 'auth'
+})
 import { computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { showPost } from '../../../composables/editor'
@@ -96,10 +100,10 @@ const getSpecificPost = async () => {
       post.value.content = { type: 'doc', content: [] }
     }
 
-    console.log('Fetched full post:', post.value)
+   // console.log('Fetched full post:', post.value)
   } catch (e) {
     error.value = 'Error fetching post'
-    console.error(e)
+  //  console.error(e)
   } finally {
     loading.value = false
   }
@@ -123,7 +127,7 @@ const updatePostHandler = async () => {
     // Optionally: Navigate back or refresh data
   } catch (e) {
     error.value = 'Failed to update post'
-    console.error(e)
+   // console.error(e)
   }
 }
 

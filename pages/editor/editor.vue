@@ -70,13 +70,13 @@ const newPost = ref<{
 const submitPost = async () => {
 
   if (!editorComponent.value || !editorComponent.value.editor) {
-    console.log('Editor is not available');
+   // console.log('Editor is not available');
     return;
   }
   const content = editorComponent.value?.editor.getJSON() ?? null;
 newPost.value.content = content;
 
-console.log("Content being sent:", newPost.value.content);
+// console.log("Content being sent:", newPost.value.content);
 
 
   const {userId} = getTokenAndUserId();
@@ -86,7 +86,7 @@ console.log("Content being sent:", newPost.value.content);
     await addPost(newPost.value);
     newPost.value = {title: '', content: null, _createdBy: '', authorId: ''}
   } catch (err) {
-    console.log('Error submitting post:', err)
+   // console.log('Error submitting post:', err)
   }
   
 }

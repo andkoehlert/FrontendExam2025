@@ -297,7 +297,7 @@ if (newProject.value.products.length === 0) {
     await fetchProjects();
     await fetchProducts();
   } catch (err) {
-    console.error('Error creating project:', err);
+  //  console.error('Error creating project:', err);
   }
 };
 </script>

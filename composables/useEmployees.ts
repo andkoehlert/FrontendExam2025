@@ -100,11 +100,11 @@ export const showEmployee = () => {
   
         if (data.value) {
           employees.value.push(data.value)
-          console.log("employee added", data.value)
+         // console.log("employee added", data.value)
         }
   
       } catch (err) {
-          console.error('Error adding employee:', err)
+        //  console.error('Error adding employee:', err)
           error.value = (err as Error).message
           throw err;
         }
@@ -126,7 +126,7 @@ export const showEmployee = () => {
 
     const removeEmployeeFromState = (id: string): void => {
       employees.value = employees.value.filter(employee => employee._id !== id)
-      console.log("employee deleted", id)
+    //  console.log("employee deleted", id)
     }
 
     const deleteEmployee = async (id: string): Promise<void> => {
@@ -206,7 +206,7 @@ const assignEmployeeToProject = async (projectId: string, employeeId: string): P
     }
     // No return needed since we're using Promise<void>
   } catch (err) {
-    console.error('Error assigning employee:', err);
+   // console.error('Error assigning employee:', err);
     throw err;
   }
 };
@@ -226,7 +226,7 @@ const removeEmployeeFromProject = async (projectId: string, employeeId: string):
       throw new Error(error.value.message || 'Failed to remove employee');
     }
   } catch (err) {
-    console.error('Error removing employee:', err);
+   // console.error('Error removing employee:', err);
     throw err;
   }
 };

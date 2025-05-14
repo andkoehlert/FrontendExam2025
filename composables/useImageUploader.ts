@@ -21,15 +21,13 @@ export function useImageUploader(editor: any) {
       const response = await $fetch<UploadResponse>('https://fullstackexam2025backend.onrender.com/api/upload', {
         method: 'POST',
         body: formData,
-          credentials: 'include',  // Add this line to send cookies
-
       });
 
       editor.value.chain().focus()
         .setImage({ src: response.url })
         .run();
     } catch (error) {
-      console.error('Upload failed:', error);
+     // console.error('Upload failed:', error);
       alert('Image upload failed. Please try again.');
     }
   };

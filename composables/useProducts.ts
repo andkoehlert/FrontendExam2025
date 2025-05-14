@@ -105,11 +105,11 @@ export const showProduct = () => {
 
       if (data.value) {
         products.value.push(data.value)
-        console.log("product added", data.value)
+       // console.log("product added", data.value)
       }
 
     } catch (err) {
-        console.error('Error adding product:', err)
+      // console.error('Error adding product:', err)
         error.value = (err as Error).message
         throw err;
       }
@@ -132,7 +132,7 @@ export const showProduct = () => {
 
     const removeProductFromState = (id: string): void => {
       products.value = products.value.filter(product => product._id !== id)
-      console.log("product deleted", id)
+    //  console.log("product deleted", id)
     }
 
     const deleteProduct = async (id: string): Promise<void> => {
