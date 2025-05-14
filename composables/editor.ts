@@ -16,7 +16,7 @@ export const showPost = () => {
     try {
       const {token} =  getTokenAndUserId()
 
-      const {data, error: fetchError, execute} = await useLazyFetch<Post[]>('http://localhost:4000/api/posts', {
+      const {data, error: fetchError, execute} = await useLazyFetch<Post[]>('https://fullstackexam2025backend.onrender.com/api/posts', {
         method: 'GET',
          headers: {
           'Content-Type': 'application/json',
