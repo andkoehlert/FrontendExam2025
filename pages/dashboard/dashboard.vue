@@ -1,35 +1,4 @@
-<script lang="ts" setup>
-definePageMeta({
-  middleware: 'auth'
-})
-import { ref, onMounted } from 'vue'
-import projectStatusChart from '../../components/Charts/projectStatusChart.vue'
-import projectLocationChart from '../../components/Charts/projectLocationChart.vue'
-import projectDelayedChart from '../../components/Charts/projectDelayedChart.vue'
-import projectPriceRangeChart from '../../components/Charts/projectPriceRangeChart.vue'
-import projectEmployeePriceChart from '../../components/Charts/projectEmployeePriceChart.vue'
 
-interface Project {
-  status: string
-  [key: string]: any
-}
-
-const projects = ref<Project[]>([])
-const isLoading = ref(true)
-const error = ref<string | null>(null)
-
-onMounted(async () => {
-  try {
-    const res = await fetch('https://fullstackexam2025backend.onrender.com/api/projects')
-    if (!res.ok) throw new Error('Failed to fetch projects')
-    projects.value = await res.json()
-  } catch (err) {
-    error.value = (err as Error).message
-  } finally {
-    isLoading.value = false
-  }
-})
-</script>
 
 <template>
   <h1 class="text-4xl font-semibold">Dashboard</h1>
@@ -82,3 +51,27 @@ onMounted(async () => {
   </div>
 </template>
 
+<script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth'
+})
+
+import projectStatusChart from '../../components/Charts/projectStatusChart.vue'
+import projectLocationChart from '../../components/Charts/projectLocationChart.vue'
+import projectDelayedChart from '../../components/Charts/projectDelayedChart.vue'
+import projectPriceRangeChart from '../../components/Charts/projectPriceRangeChart.vue'
+import projectEmployeePriceChart from '../../components/Charts/projectEmployeePriceChart.vue'
+
+import { showDashboard } from '../../composables/useDashboard';
+
+const {
+  dashboards: projects, 
+  error,
+  loading: isLoading,
+  fetchDashboards
+} = showDashboard();
+
+onMounted(() => {
+  fetchDashboards();
+});
+</script>
