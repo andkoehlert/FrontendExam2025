@@ -10,7 +10,7 @@
   <div class="flex  col-span-8 flex-col justify-center items-start rounded-xl   ">
     <div class=" border-l-4 border-black pl-10">
       <h3 class="ewh3 text-orange-500">ThreeBlock...</h3>
-    <h2 class="font-bold">Everything you need for building</h2>
+    <h1 class="font-bold">Everything you need for building</h1>
     <p>ThreeBlock provides all building blocks for your dream project</p>
     <p>We do Everything from houses...</p>
   </div>
@@ -25,9 +25,9 @@
 </div>
 
   <div class="pt-10">
-  <h1>Latest news..</h1>
+  <h2>Latest news..</h2>
 
-    <div class="grid grid-cols-4 gap-5">
+    <div class="grid md:grid-cols-4 grid-cols-1 gap-5">
       <div v-if="loading">Loading...</div>
       <div v-for="post in posts" :key="post._id">
         <EditorCardNews 
@@ -51,19 +51,7 @@ onMounted(() => {
 </script>
 
 <style  scoped>
-h2 {
-  font-size: 5.5rem;
-  color: rgb(0, 0, 0);
-}
 
-.ewh3 {
-  font-size: 1.5rem;
-  letter-spacing: 5px;
-}
-
-p {
-  font-size: 1.4rem;
-}
 
 .grid {
   position: relative; /* gør grid-containeren til en reference for den absolutte positionering */

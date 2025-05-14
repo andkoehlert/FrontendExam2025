@@ -22,7 +22,7 @@
 </form>
   <!--Existing posts-->
   <div class="pt-10">
-    <div class="grid grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
       <div v-if="loading">Loading...</div>
       <div v-for="post in posts" :key="post._id">
         <EditorCard 

@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <div class="grid grid-cols-2 gap-10 ">
+    <div class="grid grid-cols-1 gap-10 ">
       <div class="p-7 ">
         <img :src="employee.profileImage" alt="product" class="mx-auto my-7 max-h-80">
       </div>
-      <div class="grid grid-cols-2 shadow-lg shadow-dark-400/100 p-4 ">
+      <div class="grid grid-cols-1 shadow-lg shadow-dark-400/100 p-4 ">
         <h3 class="font-bold border-b-2 mb-4 pb-2">Employee: 
         <span class="font-normal">{{ employee.name }} </span></h3>
         <h3 class="font-bold border-b-2 mb-4 pb-2">Position:
