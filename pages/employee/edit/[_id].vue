@@ -49,7 +49,7 @@
   </div>
 <!--Existing Employees-->
   <div class="pt-10">
-    <div class="grid grid-cols-4 gap-5">
+    <div class="grid md:grid-cols-4 grid-cols-1 gap-5">
       <div v-if="loading">Loading...</div>
       <div v-else-if="employee">
         <EmployeeEdit

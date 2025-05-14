@@ -184,7 +184,7 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
     const updatePostOnServer = async (id: string, updatedPost: Partial<Post>, token: string): Promise<Post> => {
       const {data, error} = await useFetch(`http://localhost:4000/api/posts/${id}`, {
         method: 'PUT',
-        headers: {
+       headers: {
           'Content-Type': 'application/json',
           'auth-token': token
         },

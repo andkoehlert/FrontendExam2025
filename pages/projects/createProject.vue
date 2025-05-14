@@ -4,7 +4,7 @@
 
     <div class="text-center text-red-500">{{ error || productsError }}</div>
     <div class="">
-      <form @submit.prevent="addProjectHandler" class="grid grid-cols-2 gap-10">
+      <form @submit.prevent="addProjectHandler" class="grid md:grid-cols-2 grid-cols-2 gap-10">
         <input type="text" v-model="newProject.name" placeholder="Name" class="p-2 border rounded" required />
         <input type="text" v-model="newProject.description" placeholder="Description" class="p-2 border rounded" required />
         <input type="text" v-model="newProject.lokation" placeholder="Location" class="p-2 border rounded" required />
@@ -105,7 +105,7 @@
 
     <!-- Existing projects -->
     <div class="pt-10">
-      <div class="grid grid-cols-4 gap-5">
+      <div class="grid md:grid-cols-4 grid-cols-1 gap-5">
         <div v-if="loading">Loading projects...</div>
         <div v-for="project in projects" :key="project._id">
           <ProjectCard
