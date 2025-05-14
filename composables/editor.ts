@@ -16,7 +16,7 @@ export const showPost = () => {
     try {
       const {token} =  getTokenAndUserId()
 
-      const {data, error: fetchError, execute} = await useLazyFetch<Post[]>('https://fullstackexam2025backend.onrender.com/api/posts', {
+      const {data, error: fetchError, execute} = await useLazyFetch<Post[]>('http://localhost:4000/api/posts', {
         method: 'GET',
          headers: {
           'Content-Type': 'application/json',
@@ -44,8 +44,14 @@ export const showPost = () => {
 const fetchPostById = async (id: string): Promise<Post | null> => {
   loading.value = true;
   try {
+          const {token} =  getTokenAndUserId()
+
     const { data, error: fetchError } = await useFetch<Post | Post[]>(`https://fullstackexam2025backend.onrender.com/api/posts/${id}`, {
       method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
       watch: false
     });
 
@@ -176,7 +182,7 @@ const fetchPostById = async (id: string): Promise<Post | null> => {
     }
 
     const updatePostOnServer = async (id: string, updatedPost: Partial<Post>, token: string): Promise<Post> => {
-      const {data, error} = await useFetch(`https://fullstackexam2025backend.onrender.com/api/posts/${id}`, {
+      const {data, error} = await useFetch(`http://localhost:4000/api/posts/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
